@@ -914,16 +914,73 @@ public class MainFrame extends JFrame implements ActionListener {
 		} catch (ClassNotFoundException e) {
 			e.printStackTrace();
 		}
+		
+		decrementRoomCount(roomID);
+		
 		return roomNum;
 	}// end of method to insert visit
 	
 	private void decrementRoomCount(int roomID){
 		
+		try {
+			Class.forName("sun.jdbc.odbc.JdbcOdbcDriver");
+			Connection connection = DriverManager.getConnection("jdbc:odbc:hotelreservation");
+			Statement statement = connection.createStatement();
 		
+		String s1 = "SELECT * FROM rooms WHERE roomID = " + roomID + "";
+		
+		ResultSet resultSet = statement.executeQuery(s1);
+		resultSet.next();
+		int available = resultSet.getInt(5);
+		
+		available--;
+		
+		String s2 = "UPDATE rooms SET numAvailable = '" + available + "' WHERE roomID = " + roomID +"";
+		
+		statement.addBatch(s2);
+		statement.executeBatch();
+		
+		
+		statement.close();
+		connection.close();
+		
+		}catch (SQLException e) {
+			e.printStackTrace();
+		} catch (ClassNotFoundException e) {
+			e.printStackTrace();
+		}
 		
 	}//end of decrementRoomCount method
 
 	private void incrementRoomCount(int roomID){
+		
+		try {
+			Class.forName("sun.jdbc.odbc.JdbcOdbcDriver");
+			Connection connection = DriverManager.getConnection("jdbc:odbc:hotelreservation");
+			Statement statement = connection.createStatement();
+		
+		String s1 = "SELECT * FROM rooms WHERE roomID = " + roomID + "";
+		
+		ResultSet resultSet = statement.executeQuery(s1);
+		resultSet.next();
+		int available = resultSet.getInt(5);
+		
+		available++;
+		
+		String s2 = "UPDATE rooms SET numAvailable = '" + available + "' WHERE roomID = " + roomID +"";
+		
+		statement.addBatch(s2);
+		statement.executeBatch();
+		
+		
+		statement.close();
+		connection.close();
+		
+		}catch (SQLException e) {
+			e.printStackTrace();
+		} catch (ClassNotFoundException e) {
+			e.printStackTrace();
+		}
 		
 	}//end of incrementRoomCount method
 	
