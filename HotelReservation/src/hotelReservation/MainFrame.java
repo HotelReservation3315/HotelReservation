@@ -38,6 +38,13 @@ public class MainFrame extends JFrame implements ActionListener {
 	JLabel descriptionOfRoomLabel;
 	JLabel firstNameOfGuestLabel;
 	JLabel lastNameOfGuestLabel;
+	JLabel address1Label;
+	JLabel address2Label;
+	JLabel cityLabel;
+	JLabel stateLabel;
+	JLabel zipCodeLabel;
+	JLabel phoneLabel;
+	JLabel emailLabel;
 
 	JComboBox<String> typeOfRoom;
 	JComboBox<String> specificRoom;
@@ -52,6 +59,14 @@ public class MainFrame extends JFrame implements ActionListener {
 	final JTextField equestrianAdventureTextField;
 	final JTextField restaurantTextField;
 	final JTextField firstNameOfGuestTextField;
+	final JTextField lastNameOfGuestTextField;
+	final JTextField address1TextField;
+	final JTextField address2TextField;
+	final JTextField cityTextField;
+	final JTextField stateTextField;
+	final JTextField zipCodeTextField;
+	final JTextField phoneTextField;
+	final JTextField emailTextField;
 
 	JButton CheckAvailabilityButton;
 	JButton CheckInOption;
@@ -59,6 +74,7 @@ public class MainFrame extends JFrame implements ActionListener {
 	JButton toMainScreenButton;
 	JButton proceedToCheckout;
 	JButton generateBill;
+	JButton makeReservation;
 
 	JCheckBox telephoneCheckBox;
 	JCheckBox roomServiceCheckBox;
@@ -68,6 +84,7 @@ public class MainFrame extends JFrame implements ActionListener {
 	String toR;
 	String chaR;
 	String loR;
+	String noP;
 
 	public MainFrame() {
 
@@ -254,16 +271,85 @@ public class MainFrame extends JFrame implements ActionListener {
 		guestInfoLabel.setVisible(false);
 		
 		descriptionOfRoomLabel = new JLabel();
-		descriptionOfRoomLabel.setBounds(10, 15, 200, 100);
+		descriptionOfRoomLabel.setBounds(10, 20, 200, 100);
 		descriptionOfRoomLabel.setVisible(false);
 			
-		firstNameOfGuestLabel = new JLabel("Name: ");
+		firstNameOfGuestLabel = new JLabel("First Name: ");
 		firstNameOfGuestTextField = new JTextField(10);
 		
-		firstNameOfGuestLabel.setBounds(10, 60, 100, 100);
+		firstNameOfGuestLabel.setBounds(10, 70, 100, 100);
 		firstNameOfGuestLabel.setVisible(false);
-		firstNameOfGuestTextField.setBounds(50, 100, 110, 20);
+		firstNameOfGuestTextField.setBounds(80, 110, 110, 20);
 		firstNameOfGuestTextField.setVisible(false);
+		
+		lastNameOfGuestLabel = new JLabel("Last Name: ");
+		lastNameOfGuestTextField = new JTextField(10);
+		
+		lastNameOfGuestLabel.setBounds(10, 95, 100, 100);
+		lastNameOfGuestLabel.setVisible(false);
+		lastNameOfGuestTextField.setBounds(80, 135, 110, 20);
+		lastNameOfGuestTextField.setVisible(false);
+		
+		address1Label = new JLabel("Address 1: ");
+		address1TextField = new JTextField(10);
+		
+		address1Label.setBounds(10, 120, 100, 100);
+		address1Label.setVisible(false);
+		address1TextField.setBounds(80, 160, 110, 20);
+		address1TextField.setVisible(false);
+		
+		address2Label = new JLabel("Address 2: ");
+		address2TextField = new JTextField(10);
+		
+		address2Label.setBounds(10, 145, 100, 100);
+		address2Label.setVisible(false);
+		address2TextField.setBounds(80, 185, 110, 20);
+		address2TextField.setVisible(false);
+		
+		cityLabel = new JLabel("City: ");
+		cityTextField = new JTextField(10);
+		
+		cityLabel.setBounds(10, 170, 100, 100);
+		cityLabel.setVisible(false);
+		cityTextField.setBounds(80, 210, 110, 20);
+		cityTextField.setVisible(false);
+		
+		stateLabel = new JLabel("State: ");
+		stateTextField = new JTextField(10);
+		
+		stateLabel.setBounds(10, 195, 100, 100);
+		stateLabel.setVisible(false);
+		stateTextField.setBounds(80, 235, 110, 20);
+		stateTextField.setVisible(false);
+		
+		phoneLabel = new JLabel("Phone: ");
+		phoneTextField = new JTextField(10);
+		
+		phoneLabel.setBounds(10, 220, 100, 100);
+		phoneLabel.setVisible(false);
+		phoneTextField.setBounds(80, 260, 110, 20);
+		phoneTextField.setVisible(false);
+		
+		zipCodeLabel = new JLabel("Zip Code: ");
+		zipCodeTextField = new JTextField(10);
+		
+		zipCodeLabel.setBounds(10, 245, 100, 100);
+		zipCodeLabel.setVisible(false);
+		zipCodeTextField.setBounds(80, 285, 110, 20);
+		zipCodeTextField.setVisible(false);
+		
+		emailLabel = new JLabel("Email: ");
+		emailTextField = new JTextField(10);
+		
+		emailLabel.setBounds(10, 270, 100, 100);
+		emailLabel.setVisible(false);
+		emailTextField.setBounds(80, 310, 110, 20);
+		emailTextField.setVisible(false);
+		
+		makeReservation = new JButton("Make Reservation");
+		makeReservation.setBounds(235, 65, 160, 35);
+		makeReservation.setVisible(false);
+		makeReservation.addActionListener(this);
 		
 		
 
@@ -307,6 +393,23 @@ public class MainFrame extends JFrame implements ActionListener {
 		p.add(descriptionOfRoomLabel);
 		p.add(firstNameOfGuestLabel);
 		p.add(firstNameOfGuestTextField);
+		p.add(lastNameOfGuestLabel);
+		p.add(lastNameOfGuestTextField);
+		p.add(address1Label);
+		p.add(address1TextField);
+		p.add(address2Label);
+		p.add(address2TextField);
+		p.add(phoneLabel);
+		p.add(phoneTextField);
+		p.add(cityLabel);
+		p.add(cityTextField);
+		p.add(stateLabel);
+		p.add(stateTextField);
+		p.add(zipCodeLabel);
+		p.add(zipCodeTextField);
+		p.add(emailLabel);
+		p.add(emailTextField);
+		p.add(makeReservation);
 
 		frame.add(p);
 		frame.setSize(WIDTH, HEIGHT);
@@ -465,6 +568,23 @@ public class MainFrame extends JFrame implements ActionListener {
 			descriptionOfRoomLabel.setVisible(false);
 			firstNameOfGuestLabel.setVisible(false);
 			firstNameOfGuestTextField.setVisible(false);
+			lastNameOfGuestLabel.setVisible(false);
+			lastNameOfGuestTextField.setVisible(false);
+			address1Label.setVisible(false);
+			address1TextField.setVisible(false);
+			address2Label.setVisible(false);
+			address2TextField.setVisible(false);
+			cityLabel.setVisible(false);
+			cityTextField.setVisible(false);
+			stateLabel.setVisible(false);
+			stateTextField.setVisible(false);
+			phoneLabel.setVisible(false);
+			phoneTextField.setVisible(false);
+			zipCodeLabel.setVisible(false);
+			zipCodeTextField.setVisible(false);
+			emailLabel.setVisible(false);
+			emailTextField.setVisible(false);
+			makeReservation.setVisible(false);
 
 			CheckInOption.setVisible(true);
 			CheckOutOption.setVisible(true);
@@ -495,6 +615,7 @@ public class MainFrame extends JFrame implements ActionListener {
 				toR = typeOfRoom.getSelectedItem().toString();
 				chaR = specificRoom.getSelectedItem().toString();
 				loR = locationOfRoom.getSelectedItem().toString();
+				noP = numberOfPeople.getSelectedItem().toString();
 
 				int roomID = checkAvailability(toR, loR, chaR);
 
@@ -688,10 +809,27 @@ public class MainFrame extends JFrame implements ActionListener {
 		CheckAvailabilityButton.setVisible(false);
 		
 		guestInfoLabel.setVisible(true);
-		descriptionOfRoomLabel.setText("<html> Type of room: <font color='red'>"+ toR + "</font> <br> Characteristics: <font color='red'>"+ chaR + "</font> <br> Location of Room: <font color='red'>" + loR + "</font> </html>"); //html statement helps to use "end of line" and other html features with Jlabel.
+		descriptionOfRoomLabel.setText("<html> Type of room: <font color='red'>"+ toR + "</font> <br> Characteristics: <font color='red'>"+ chaR + "</font> <br> Location of Room: <font color='red'>" + loR + "</font> <br> Number of People: <font color='red'>" + noP + "</font> </html>"); //html statement helps to use "end of line" and other html features with Jlabel.
 		descriptionOfRoomLabel.setVisible(true);
 		firstNameOfGuestLabel.setVisible(true);
 		firstNameOfGuestTextField.setVisible(true);
+		lastNameOfGuestLabel.setVisible(true);
+		lastNameOfGuestTextField.setVisible(true);
+		address1Label.setVisible(true);
+		address1TextField.setVisible(true);
+		address2Label.setVisible(true);
+		address2TextField.setVisible(true);
+		cityLabel.setVisible(true);
+		cityTextField.setVisible(true);
+		stateLabel.setVisible(true);
+		stateTextField.setVisible(true);
+		phoneLabel.setVisible(true);
+		phoneTextField.setVisible(true);
+		zipCodeLabel.setVisible(true);
+		zipCodeTextField.setVisible(true);
+		emailLabel.setVisible(true);
+		emailTextField.setVisible(true);
+		makeReservation.setVisible(true);
 		
 	}
 
