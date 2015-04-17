@@ -85,6 +85,22 @@ public class MainFrame extends JFrame implements ActionListener {
 	String chaR;
 	String loR;
 	String noP;
+	String fName;
+	String lName;
+	String add1;
+	String add2;
+	String city;
+	String state;
+	String zip;
+	String phone;
+	String email;
+	String ccNum;
+	String checkIn;//date
+	String checkOut;//date
+	int roomID;
+	int guestID;
+	int roomNumber;
+	
 
 	public MainFrame() {
 
@@ -617,72 +633,52 @@ public class MainFrame extends JFrame implements ActionListener {
 				loR = locationOfRoom.getSelectedItem().toString();
 				noP = numberOfPeople.getSelectedItem().toString();
 
-				int roomID = checkAvailability(toR, loR, chaR);
+				roomID = checkAvailability(toR, loR, chaR);
 
 			}else{
 				JOptionPane.showMessageDialog(null,	"Please select an option from all fields.");
 			}
 		}
+		
+		if(event.getSource() == makeReservation){
+			
+			if(firstNameOfGuestTextField.getText() != null && lastNameOfGuestTextField.getText() != null 
+					&& address1TextField.getText() != null && address2TextField.getText() != null
+					&& cityTextField.getText() != null && stateTextField.getText() != null
+					&& phoneTextField.getText() != null && zipCodeTextField.getText() != null
+					&& emailTextField.getText() != null
+					/*&& creditCardNumberTextField.getText() != null*/){ // Checks if the fields are completed by the user.
+				
+				fName = firstNameOfGuestTextField.getText();
+				lName = lastNameOfGuestTextField.getText();
+				add1 = address1TextField.getText();
+				add2 = address2TextField.getText();
+				city = cityTextField.getText();
+				state = stateTextField.getText();
+				zip = zipCodeTextField.getText();
+				phone = phoneTextField.getText();
+				email = emailTextField.getText();
+				//ccNum = creditCardNumberTextField.getText();
+				
+				
+				guestID = guestIn(fName, lName, add1, add2, city, state, zip, phone, email/*, ccNum*/);
+				roomNumber = visitIn(roomID, guestID, Integer.parseInt(noP), checkIn, checkOut);
+				String message = "Your room number is " + roomNumber;
+				message = message + ". Please remember this number for checkout.";
+				JOptionPane.showMessageDialog(null,	message);
+				
+			}else{
+				JOptionPane.showMessageDialog(null,	"Please select an option from all fields.");
+			}
+			
+		}
 	}
 
-	// if (toR == "Luxury") {
-	// if (loR == "Patio") {
-	// if (chaR == "1 Queen bed") {
-	// // ACCESS DATABASE LOOKING FOR LUXURY, PATIO AND 1
-	// // QUEEN BED. RETRIEVE NUMBER OF ROOMS AVAILABLE.
-	// checkAvailability(toR, loR, chaR);
-	// } else if (chaR == "2 Queen beds") {
-	// checkAvailability(toR, loR, chaR);
-	// } else if (chaR == "Two Room") {
-	// checkAvailability(toR, loR, chaR);
-	// } else if (chaR == "Three Room") {
-	// checkAvailability(toR, loR, chaR);
-	// } else if (chaR == "Bridal") {
-	// checkAvailability(toR, loR, chaR);
-	// }
-	// } else if (loR == "Forest") {
-	// if (chaR == "Two Room") {
-	// // ACCESS DATABASE LOOKING FOR LUXURY, FOREST AND
-	// // TWO ROOM. RETRIEVE NUMBER OF ROOMS AVAILABLE.
-	// checkAvailability(toR, loR, chaR);
-	// } else if (chaR == "Three Room") {
-	// checkAvailability(toR, loR, chaR);
-	// } else if (chaR == "Bridal") {
-	// checkAvailability(toR, loR, chaR);
-	// } else if (chaR == "1 Queen bed") {
-	// checkAvailability(toR, loR, chaR);
-	// } else if (chaR == "2 Queen beds") {
-	// checkAvailability(toR, loR, chaR);
-	// }
-	// }
-	// } else if (toR == "Cottage") {
-	// if (loR == "Patio") {
-	// if (chaR == "Two Room") {
-	// checkAvailability(toR, loR, chaR);
-	// } else if (chaR == "Three Room") {
-	// checkAvailability(toR, loR, chaR);
-	// } else if (chaR == "Four Room") {
-	// checkAvailability(toR, loR, chaR);
-	// }
-	// } else if (loR == "Forest") {
-	// if (chaR == "Two Room") {
-	// checkAvailability(toR, loR, chaR);
-	// } else if (chaR == "Three Room") {
-	// checkAvailability(toR, loR, chaR);
-	// } else if (chaR == "Four Room") {
-	// checkAvailability(toR, loR, chaR);
-	// }
-	// }
-	// }
-	// }
-	// else {
-	// JOptionPane.showMessageDialog(null,
-	// "Please select an option from all fields.");
-	// }
+	
+	
+	
 
-	/*
-	 * String name = NameField.getText();
-	 * 
+	 /* 
 	 * try { Class.forName( "sun.jdbc.odbc.JdbcOdbcDriver" ); Connection
 	 * connection = DriverManager.getConnection("jdbc:odbc:S_P_SP"); Statement
 	 * statement = connection.createStatement();
@@ -702,6 +698,9 @@ public class MainFrame extends JFrame implements ActionListener {
 	 * JOptionPane.ERROR_MESSAGE ); System.exit( 1 ); }
 	 */
 
+	
+	
+	
 	// returns true if there is at least one room available meeting the
 	// specifications
 	// type t, location l, and characteristics ch
@@ -748,7 +747,12 @@ public class MainFrame extends JFrame implements ActionListener {
 			result = JOptionPane.showConfirmDialog(null,"A room is available. Continue to booking?", "Room Available", JOptionPane.YES_NO_OPTION);
 
 			if (result == JOptionPane.YES_OPTION) {
+				
+				checkIn = checkInTextField.getText();
+				checkOut = checkOutTextField.getText();
+				
 				try {
+					
 					Class.forName("sun.jdbc.odbc.JdbcOdbcDriver");
 					Connection connection = null;
 					connection = DriverManager.getConnection("jdbc:odbc:hotelreservation");
@@ -847,7 +851,7 @@ public class MainFrame extends JFrame implements ActionListener {
 
 	// inserts guest information into guest table
 	// returns the guestID generated for use in inserting into visit table
-	private int guestIn(String fName, String lName, String add1, String add2, String city, String state, String zip, String phone, String email, String ccNum) {
+	private int guestIn(String fName, String lName, String add1, String add2, String city, String state, String zip, String phone, String email/*, String ccNum*/) {
 
 		int guestNum = 0;
 
@@ -857,8 +861,8 @@ public class MainFrame extends JFrame implements ActionListener {
 			Statement statement = connection.createStatement();
 
 			String s1 = "INSERT INTO guest(firstName, lastName, address1, address2, city, state, zipCode, phone, email, ccNum) ";
-			s1 = s1 + "VALUES ('" + fName + "', '" + lName + "', '" + add1 + "', " + add2 + "', " + city;
-			s1 = s1 + "', " + state + "', " + zip + "', " + phone + "', " + email + "', " + ccNum + "')";
+			s1 = s1 + "VALUES ('" + fName + "', '" + lName + "', '" + add1 + "', '" + add2 + "', '" + city;
+			s1 = s1 + "', '" + state + "', '" + zip + "', '" + phone + "', '" + email + "', '1234567891234567')";//dummy cc value
 
 			statement.addBatch(s1);
 			statement.executeBatch();
@@ -891,8 +895,8 @@ public class MainFrame extends JFrame implements ActionListener {
 			Statement statement = connection.createStatement();
 
 			String s1 = "INSERT INTO visit(roomID, guestID, numOfPeople, checkIn, checkOut) ";
-			s1 = s1 + "VALUES ('" + roomID + "', " + guestID + "', " + numOfPeople + "', " + inDate;
-			s1 = s1 + "', " + outDate + "')";
+			s1 = s1 + "VALUES ('" + roomID + "', '" + guestID + "', '" + numOfPeople + "', '" + inDate;
+			s1 = s1 + "', '" + outDate + "')";
 
 			statement.addBatch(s1);
 			statement.executeBatch();
@@ -912,5 +916,15 @@ public class MainFrame extends JFrame implements ActionListener {
 		}
 		return roomNum;
 	}// end of method to insert visit
+	
+	private void decrementRoomCount(int roomID){
+		
+		
+		
+	}//end of decrementRoomCount method
 
+	private void incrementRoomCount(int roomID){
+		
+	}//end of incrementRoomCount method
+	
 }
