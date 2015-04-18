@@ -101,7 +101,6 @@ public class MainFrame extends JFrame implements ActionListener {
 	int guestID;
 	int roomNumber;
 	
-
 	public MainFrame() {
 
 		checkInTitle = new JLabel("CHECK-IN:");
@@ -675,35 +674,9 @@ public class MainFrame extends JFrame implements ActionListener {
 	}
 
 	
-	
-	
-
-	 /* 
-	 * try { Class.forName( "sun.jdbc.odbc.JdbcOdbcDriver" ); Connection
-	 * connection = DriverManager.getConnection("jdbc:odbc:S_P_SP"); Statement
-	 * statement = connection.createStatement();
-	 * 
-	 * statement.executeUpdate(
-	 * "INSERT INTO s VALUES ('"+name+"', 'Simpson', 20, 'Venezuela')" );
-	 * text.setText("Insertion completed");
-	 * 
-	 * statement.close(); connection.close();
-	 * 
-	 * } catch ( SQLException sqlException ) { // detect problems interacting
-	 * with the database JOptionPane.showMessageDialog( null,
-	 * sqlException.getMessage(), "Database Error", JOptionPane.ERROR_MESSAGE );
-	 * System.exit( 1 ); } catch ( ClassNotFoundException classNotFound ) { //
-	 * detect problems loading database driver JOptionPane.showMessageDialog(
-	 * null, classNotFound.getMessage(), "Driver Not Found",
-	 * JOptionPane.ERROR_MESSAGE ); System.exit( 1 ); }
-	 */
-
-	
-	
-	
-	// returns true if there is at least one room available meeting the
+	// Returns true if there is at least one room available meeting the
 	// specifications
-	// type t, location l, and characteristics ch
+	// type t, location l, and characteristics ch.
 	private boolean isAvailable(String t, String l, String ch) {
 		boolean available = false;
 
@@ -739,7 +712,9 @@ public class MainFrame extends JFrame implements ActionListener {
 		return available;
 	}// end isAvailable method
 
-	// returns the roomID if there is at least one room available meeting the specifications type toR, location loR, and characteristics chaR
+	// Returns the roomID if there is at least one room available meeting
+	//the specifications type toR, location loR, and characteristics chaR.
+	//Returns -1 as the roomID if the user chooses not to continue to booking.
 	private int checkAvailability(String toR, String loR, String chaR) {
 
 		int result, roomID = -1;
@@ -789,8 +764,7 @@ public class MainFrame extends JFrame implements ActionListener {
 		return roomID; // returns -1 if no room available
 
 	} // END OF checkAvailability METHOD
-
-	// end of moving to booking room and retrieving roomID to identify type/loc/char
+// end of booking room and retrieving roomID to identify type/loc/char
 
 	private void guestInfo() {
 		checkInTitle.setVisible(true);
@@ -837,20 +811,9 @@ public class MainFrame extends JFrame implements ActionListener {
 		
 	}
 
-	private void checkIn() {// need args (toR, loR, chaR, fName, lName, add1,
-							// add2, city, state,
-		// zip, phone, email, ccNum, NumOfPeople, inDate, outDate)
 
-		// int rmID = checkAvailability(toR, loR, chaR);//fill in args
-		// int gstID = guestIn(fName, lName, add1, add2, city, state, zip,
-		// phone, email, ccNum);//need args
-		// int rmNum = visitIn(rmID, gstID, numOfPeople, inDate, outDate);//need
-		// args
-
-	}// end checkIn method
-
-	// inserts guest information into guest table
-	// returns the guestID generated for use in inserting into visit table
+	// Inserts guest information into guest table.
+	// Returns the guestID generated for use in inserting into visit table.
 	private int guestIn(String fName, String lName, String add1, String add2, String city, String state, String zip, String phone, String email/*, String ccNum*/) {
 
 		int guestNum = 0;
@@ -883,8 +846,8 @@ public class MainFrame extends JFrame implements ActionListener {
 		return guestNum;
 	}// end of method to insert guest information
 
-	// inserts visit information into visit table
-	// returns the room Number for the check in confirmation
+	// Inserts visit information into visit table.
+	// Returns the roomNumber for the check in confirmation.
 	private int visitIn(int roomID, int guestID, int numOfPeople, String inDate, String outDate) {
 
 		int roomNum = 0;
@@ -920,6 +883,8 @@ public class MainFrame extends JFrame implements ActionListener {
 		return roomNum;
 	}// end of method to insert visit
 	
+	// Decrements the number available for the room category 
+	// indicated by parameter roomID.
 	private void decrementRoomCount(int roomID){
 		
 		try {
@@ -952,6 +917,8 @@ public class MainFrame extends JFrame implements ActionListener {
 		
 	}//end of decrementRoomCount method
 
+	// Increments the number available for the room category 
+	// indicated by parameter roomID.
 	private void incrementRoomCount(int roomID){
 		
 		try {
