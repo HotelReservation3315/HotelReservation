@@ -26,7 +26,7 @@ public class MainFrame extends JFrame implements ActionListener {
 
 	JLabel checkInTitle;
 	JLabel checkInLabel;
-	JLabel checkOutLabel;
+	//JLabel checkOutLabel;
 	JLabel typeOfRoomLabel;
 	JLabel specificRoomLabel;
 	JLabel locationOfRoomLabel;
@@ -45,6 +45,7 @@ public class MainFrame extends JFrame implements ActionListener {
 	JLabel zipCodeLabel;
 	JLabel phoneLabel;
 	JLabel emailLabel;
+	JLabel checkOutSummaryLabel;
 
 	JComboBox<String> typeOfRoom;
 	JComboBox<String> specificRoom;
@@ -101,6 +102,7 @@ public class MainFrame extends JFrame implements ActionListener {
 	int guestID;
 	String roomNumber; // Identifies each room with: roomID + numAvailable.
 	int numAvailable; // Indicates how many rooms are available.
+	boolean isInDatabase = false; // Indicates if a room is in the database.
 	
 	public MainFrame() {
 
@@ -117,20 +119,14 @@ public class MainFrame extends JFrame implements ActionListener {
 		checkInTextField.setBounds(100, 45, 100, 20);
 		checkInTextField.setVisible(false);
 
-		checkOutLabel = new JLabel("Check-out Date:");
-		checkOutTextField = new JTextField(10);
-
-		checkOutLabel.setBounds(10, 60, 100, 50);
-		checkOutLabel.setVisible(false);
-		checkOutTextField.setBounds(110, 75, 100, 20);
-		checkOutTextField.setVisible(false);
+		//checkOutLabel = new JLabel("Check-out Date:");
 
 		typeOfRoomLabel = new JLabel("Type of Room:");
 		typeOfRoom = new JComboBox<String>();
 
-		typeOfRoomLabel.setBounds(10, 90, 130, 50);
+		typeOfRoomLabel.setBounds(10, 60, 130, 50);
 		typeOfRoomLabel.setVisible(false);
-		typeOfRoom.setBounds(100, 105, 80, 20);
+		typeOfRoom.setBounds(100, 75, 80, 20);
 		typeOfRoom.setVisible(false);
 
 		typeOfRoom.addItem("Luxury");
@@ -141,9 +137,9 @@ public class MainFrame extends JFrame implements ActionListener {
 
 		specificRoomLabel = new JLabel("Characteristics:");
 		specificRoom = new JComboBox<String>();
-		specificRoomLabel.setBounds(10, 120, 130, 50);
+		specificRoomLabel.setBounds(10, 90, 130, 50);
 		specificRoomLabel.setVisible(false);
-		specificRoom.setBounds(110, 135, 120, 20);
+		specificRoom.setBounds(110, 105, 120, 20);
 		specificRoom.setVisible(false);
 
 		typeOfRoom.addItemListener(new ItemListener() {
@@ -171,9 +167,9 @@ public class MainFrame extends JFrame implements ActionListener {
 		locationOfRoomLabel = new JLabel("Location of Room:");
 		locationOfRoom = new JComboBox<String>();
 
-		locationOfRoomLabel.setBounds(10, 150, 130, 50);
+		locationOfRoomLabel.setBounds(10, 120, 130, 50);
 		locationOfRoomLabel.setVisible(false);
-		locationOfRoom.setBounds(120, 165, 75, 20);
+		locationOfRoom.setBounds(120, 135, 75, 20);
 		locationOfRoom.setVisible(false);
 
 		locationOfRoom.addItem("Patio");
@@ -185,9 +181,9 @@ public class MainFrame extends JFrame implements ActionListener {
 		numberOfPeopleLabel = new JLabel("Number of People:");
 		numberOfPeople = new JComboBox<Integer>();
 
-		numberOfPeopleLabel.setBounds(10, 180, 130, 50);
+		numberOfPeopleLabel.setBounds(10, 150, 130, 50);
 		numberOfPeopleLabel.setVisible(false);
-		numberOfPeople.setBounds(120, 195, 45, 20);
+		numberOfPeople.setBounds(120, 165, 45, 20);
 		numberOfPeople.setVisible(false);
 
 		numberOfPeople.addItem(1);
@@ -200,7 +196,7 @@ public class MainFrame extends JFrame implements ActionListener {
 		numberOfPeople.setSelectedItem(null); // Doesn't select any option by default in the ComboBox.
 
 		CheckAvailabilityButton = new JButton("Check Availability");
-		CheckAvailabilityButton.setBounds(20, 240, 150, 25);
+		CheckAvailabilityButton.setBounds(20, 210, 150, 25);
 		CheckAvailabilityButton.setVisible(false);
 		CheckAvailabilityButton.addActionListener(this);
 		
@@ -367,6 +363,16 @@ public class MainFrame extends JFrame implements ActionListener {
 		makeReservation.setVisible(false);
 		makeReservation.addActionListener(this);
 		
+		checkOutSummaryLabel = new JLabel();
+		checkOutSummaryLabel.setBounds(200, 40, 200, 260);
+		checkOutSummaryLabel.setVisible(false);
+		
+		//checkOutLabel.setBounds(10, 60, 100, 50);
+		//checkOutLabel.setVisible(false);
+		checkOutTextField = new JTextField(10);
+		checkOutTextField.setBounds(293, 122, 100, 20);
+		checkOutTextField.setVisible(false);
+		
 		
 
 		JPanel p = new JPanel();
@@ -377,7 +383,7 @@ public class MainFrame extends JFrame implements ActionListener {
 		p.add(checkInTitle);
 		p.add(checkInLabel);
 		p.add(checkInTextField);
-		p.add(checkOutLabel);
+		//p.add(checkOutLabel);
 		p.add(checkOutTextField);
 		p.add(typeOfRoom);
 		p.add(typeOfRoomLabel);
@@ -426,6 +432,7 @@ public class MainFrame extends JFrame implements ActionListener {
 		p.add(emailLabel);
 		p.add(emailTextField);
 		p.add(makeReservation);
+		p.add(checkOutSummaryLabel);
 
 		frame.add(p);
 		frame.setSize(WIDTH, HEIGHT);
@@ -506,17 +513,7 @@ public class MainFrame extends JFrame implements ActionListener {
 		}
 
 		if (event.getSource() == CheckOutOption) {
-
-			checkOutTitle.setVisible(true);
-			roomNumberLabel.setVisible(true);
-			roomNumberTextField.setVisible(true);
-			proceedToCheckout.setVisible(true);
-
-			toMainScreenButton.setVisible(true);
-
-			CheckInOption.setVisible(false);
-			CheckOutOption.setVisible(false);
-
+			goToCheckOutScreen();
 		}
 
 		if (event.getSource() == toMainScreenButton) {
@@ -524,17 +521,7 @@ public class MainFrame extends JFrame implements ActionListener {
 		}
 
 		if (event.getSource() == proceedToCheckout) {
-
-			roomNumberLabel.setVisible(false);
-			roomNumberTextField.setVisible(false);
-			proceedToCheckout.setVisible(false);
-
-			additionalChargesLabel.setVisible(true);
-			telephoneCheckBox.setVisible(true);
-			roomServiceCheckBox.setVisible(true);
-			equestrianAdventureCheckBox.setVisible(true);
-			restaurantCheckBox.setVisible(true);
-			generateBill.setVisible(true);
+			searchRoom();
 		}
 
 		if (event.getSource() == CheckAvailabilityButton) {
@@ -542,7 +529,8 @@ public class MainFrame extends JFrame implements ActionListener {
 			if (typeOfRoom.getSelectedItem() != null
 					&& specificRoom.getSelectedItem() != null
 					&& locationOfRoom.getSelectedItem() != null
-					&& numberOfPeople.getSelectedItem() != null) { // Checks if the fields are completed by the user.
+					&& numberOfPeople.getSelectedItem() != null
+					&& checkInTextField.getText().length() > 0) { // Checks if the fields are completed by the user.
 
 				toR = typeOfRoom.getSelectedItem().toString();
 				chaR = specificRoom.getSelectedItem().toString();
@@ -558,11 +546,11 @@ public class MainFrame extends JFrame implements ActionListener {
 		
 		if(event.getSource() == makeReservation){
 			
-			if(firstNameOfGuestTextField.getText() != null && lastNameOfGuestTextField.getText() != null 
-					&& address1TextField.getText() != null && address2TextField.getText() != null
-					&& cityTextField.getText() != null && stateTextField.getText() != null
-					&& phoneTextField.getText() != null && zipCodeTextField.getText() != null
-					&& emailTextField.getText() != null
+			if(firstNameOfGuestTextField.getText().length() > 0 && lastNameOfGuestTextField.getText().length() > 0 
+					&& address1TextField.getText().length() > 0 && address2TextField.getText().length() > 0
+					&& cityTextField.getText().length() > 0 && stateTextField.getText().length() > 0
+					&& phoneTextField.getText().length() > 0 && zipCodeTextField.getText().length() > 0
+					&& emailTextField.getText().length() > 0
 					/*&& creditCardNumberTextField.getText() != null*/){ // Checks if the fields are completed by the user.
 				
 				fName = firstNameOfGuestTextField.getText();
@@ -578,8 +566,7 @@ public class MainFrame extends JFrame implements ActionListener {
 				
 				
 				guestID = guestIn(fName, lName, add1, add2, city, state, zip, phone, email/*, ccNum*/);
-				roomNumber = visitIn(roomID, guestID, Integer.parseInt(noP), checkIn, checkOut);
-				//String roomNumberAUX = Integer.toString(roomNumber);
+				roomNumber = visitIn(roomID, guestID, Integer.parseInt(noP), checkIn/*, checkOut*/);
 				String message = "Your room number is " +  roomNumber;
 				message = message + ". Please remember this number for checkout.";
 				goToMainScreen();
@@ -591,6 +578,98 @@ public class MainFrame extends JFrame implements ActionListener {
 			}
 			
 		}
+	}
+
+	
+	private void searchRoom() {
+		try {
+			Class.forName( "sun.jdbc.odbc.JdbcOdbcDriver" );
+			Connection connection = DriverManager.getConnection("jdbc:odbc:hotelreservation");
+			Statement statement =  connection.createStatement();
+					    							
+				roomNumber = null;
+				String s1 = "SELECT * FROM visit WHERE roomNumber = '"+roomNumberTextField.getText()+"'";
+				ResultSet resultSet1 = statement.executeQuery(s1);
+				
+					while(resultSet1.next()){
+						roomNumber = resultSet1.getString(1);
+						roomID = Integer.parseInt(resultSet1.getString(2));
+						guestID = Integer.parseInt(resultSet1.getString(3));
+						noP = resultSet1.getString(4);
+						checkIn = resultSet1.getString(5);
+					}
+					
+					if(roomNumber != null/*true*/){ // If the room exists in the database (the person checked-in)
+						goToAdditionalChargesScreen();
+						isInDatabase = true;
+						
+				
+						String s2 = "SELECT * FROM guest WHERE guestID = "+guestID+" ";
+						ResultSet resultSet2 = statement.executeQuery(s2);
+							while(resultSet2.next()){
+								fName = resultSet2.getString(2);
+								lName = resultSet2.getString(3);
+								add1 = resultSet2.getString(4);
+								add2 = resultSet2.getString(5);
+								city = resultSet2.getString(6);
+								state = resultSet2.getString(7);
+								zip = resultSet2.getString(8);
+								phone = resultSet2.getString(9);
+								email = resultSet2.getString(10);
+							}
+				
+						String s3 = "SELECT * FROM rooms WHERE roomID = "+roomID+" ";
+						ResultSet resultSet3 = statement.executeQuery(s3);
+							while(resultSet3.next()){
+								toR = resultSet3.getString(2);
+								loR = resultSet3.getString(3);
+								chaR = resultSet3.getString(4);
+							}
+				
+						/*String s4 = "SELECT * FROM addresses WHERE personID = "+lastPersonAdded_ID+" ";
+						ResultSet resultSet4 = statement.executeQuery(s4);
+							while(resultSet4.next()){
+								Iframe.address1Field.setText(resultSet4.getString(3));
+								Iframe.address2Field.setText(resultSet4.getString(4));
+								Iframe.cityField.setText(resultSet4.getString(5));
+								Iframe.stateField.setText(resultSet4.getString(6));
+								Iframe.zipCodeField.setText(resultSet4.getString(7));
+						}
+						*/
+						
+						checkOutSummaryLabel.setText("<html> Type of room: <font color='red'>"+ toR + "</font> " +
+								"<br> Characteristics: <font color='red'>"+ chaR + "</font>" +
+								" <br> Location of Room: <font color='red'>" + loR + "</font>" +
+								" <br> Number of People: <font color='red'>" + noP + "</font>" +
+								" <br> Check-in Date: <font color='red'>" + checkIn + "</font>" +
+								" <br> Check-out Date: " +
+								" <br><br> Name of Guest: <font color='red'>" + fName + "</font>" +
+								" <br> Last Name of Guest: <font color='red'>" + lName + "</font>" +
+								" <br> Address 1: <font color='red'>" + add1 + "</font>" +
+								" <br> Address 2: <font color='red'>" + add2 + "</font>" +
+								" <br> City: <font color='red'>" + city + "</font>" +
+								" <br> State: <font color='red'>" + state + "</font>" +
+								" <br> Zip Code: <font color='red'>" + zip + "</font>" +
+								" <br> Phone: <font color='red'>" + phone + "</font>" +
+								" <br> Email: <font color='red'>" + email + "</font></html>");
+					}else{ // If the room does not exist in the database (the person did not checked-in)
+						JOptionPane.showMessageDialog(null, "The room is not registered.");
+						isInDatabase = false;
+					}
+						
+			statement.close();
+	        connection.close();
+			 
+		} 
+		catch ( SQLException sqlException ) { // detect problems interacting with the database
+	        JOptionPane.showMessageDialog( null, sqlException.getMessage(), "Database Error", JOptionPane.ERROR_MESSAGE );
+	        System.exit( 1 );
+	    }
+	    catch ( ClassNotFoundException classNotFound ) { // detect problems loading database driver
+	        JOptionPane.showMessageDialog( null, classNotFound.getMessage(), "Driver Not Found", JOptionPane.ERROR_MESSAGE );
+	        System.exit( 1 );
+	    }
+		
 	}
 
 	// Returns true if there is at least one room available meeting the
@@ -643,7 +722,7 @@ public class MainFrame extends JFrame implements ActionListener {
 			if (result == JOptionPane.YES_OPTION) {
 				
 				checkIn = checkInTextField.getText();
-				checkOut = checkOutTextField.getText();
+				//checkOut = checkOutTextField.getText();
 				
 				try {
 					
@@ -722,7 +801,7 @@ public class MainFrame extends JFrame implements ActionListener {
 
 	// Inserts visit information into visit table.
 	// Returns the roomNumber for the check in confirmation.
-	private String visitIn(int roomID, int guestID, int numOfPeople, String inDate, String outDate) {
+	private String visitIn(int roomID, int guestID, int numOfPeople, String inDate/*, String outDate*/) {
 
 		String roomNum = Integer.toString(roomID) + Integer.toString(numAvailable);
 
@@ -733,9 +812,9 @@ public class MainFrame extends JFrame implements ActionListener {
 
 			roomNum = Integer.toString(roomID) + "-" + Integer.toString(numAvailable); // Identifies each room with: roomID + numAvailable.
 			
-			String s1 = "INSERT INTO visit(roomNumber, roomID, guestID, numOfPeople, checkIn, checkOut) ";
-			s1 = s1 + "VALUES ('" + roomNum + "','" + roomID + "', '" + guestID + "', '" + numOfPeople + "', '" + inDate;
-			s1 = s1 + "', '" + outDate + "')";
+			String s1 = "INSERT INTO visit(roomNumber, roomID, guestID, numOfPeople, checkIn) ";
+			s1 = s1 + "VALUES ('" + roomNum + "','" + roomID + "', '" + guestID + "', '" + numOfPeople + "', '" + inDate + "')";
+			//s1 = s1 + "', '" + outDate + "')";
 
 			statement.addBatch(s1);
 			statement.executeBatch();
@@ -826,7 +905,7 @@ public class MainFrame extends JFrame implements ActionListener {
 	private void goToCheckInScreen() {
 		checkInTitle.setVisible(true);
 		checkInLabel.setVisible(true);
-		checkOutLabel.setVisible(true);
+		//checkOutLabel.setVisible(true);
 		typeOfRoomLabel.setVisible(true);
 		specificRoomLabel.setVisible(true);
 		locationOfRoomLabel.setVisible(true);
@@ -838,7 +917,7 @@ public class MainFrame extends JFrame implements ActionListener {
 		numberOfPeople.setVisible(true);
 
 		checkInTextField.setVisible(true);
-		checkOutTextField.setVisible(true);
+		//checkOutTextField.setVisible(true);
 		toMainScreenButton.setVisible(true);
 
 		CheckAvailabilityButton.setVisible(true);
@@ -847,10 +926,22 @@ public class MainFrame extends JFrame implements ActionListener {
 		CheckOutOption.setVisible(false);
 	}
 	
+	private void goToCheckOutScreen() {
+		checkOutTitle.setVisible(true);
+		roomNumberLabel.setVisible(true);
+		roomNumberTextField.setVisible(true);
+		proceedToCheckout.setVisible(true);
+
+		toMainScreenButton.setVisible(true);
+
+		CheckInOption.setVisible(false);
+		CheckOutOption.setVisible(false);
+	}
+	
 	private void guestInfo() {
 		checkInTitle.setVisible(true);
 		checkInLabel.setVisible(false);
-		checkOutLabel.setVisible(false);
+		//checkOutLabel.setVisible(false);
 		typeOfRoomLabel.setVisible(false);
 		specificRoomLabel.setVisible(false);
 		locationOfRoomLabel.setVisible(false);
@@ -891,10 +982,25 @@ public class MainFrame extends JFrame implements ActionListener {
 		makeReservation.setVisible(true);
 	}
 	
+	private void goToAdditionalChargesScreen() {
+		roomNumberLabel.setVisible(false);
+		roomNumberTextField.setVisible(false);
+		proceedToCheckout.setVisible(false);
+
+		additionalChargesLabel.setVisible(true);
+		telephoneCheckBox.setVisible(true);
+		roomServiceCheckBox.setVisible(true);
+		equestrianAdventureCheckBox.setVisible(true);
+		restaurantCheckBox.setVisible(true);
+		generateBill.setVisible(true);
+		checkOutSummaryLabel.setVisible(true);
+		checkOutTextField.setVisible(true);
+	}
+	
 	private void goToMainScreen() {
 		checkInTitle.setVisible(false);
 		checkInLabel.setVisible(false);
-		checkOutLabel.setVisible(false);
+		//checkOutLabel.setVisible(false);
 		typeOfRoomLabel.setVisible(false);
 		specificRoomLabel.setVisible(false);
 		locationOfRoomLabel.setVisible(false);
@@ -952,6 +1058,8 @@ public class MainFrame extends JFrame implements ActionListener {
 		emailLabel.setVisible(false);
 		emailTextField.setVisible(false);
 		makeReservation.setVisible(false);
+		
+		checkOutSummaryLabel.setVisible(false);
 
 		CheckInOption.setVisible(true);
 		CheckOutOption.setVisible(true);
