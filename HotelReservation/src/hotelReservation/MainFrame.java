@@ -603,6 +603,7 @@ public class MainFrame extends JFrame implements ActionListener {
 		if(event.getSource() == generateBill) {
 			if(checkOutTextField.getText().length() > 0){ // If a check-out date is selected.
 				goToBillScreen();
+				incrementRoomCount(roomID);
 				
 				try {
 					Class.forName( "sun.jdbc.odbc.JdbcOdbcDriver" );
@@ -1179,6 +1180,8 @@ public class MainFrame extends JFrame implements ActionListener {
 		BillLabel.setVisible(true);
 		BillSummaryLabel.setVisible(true);
 		BillSummaryLabel2.setVisible(true);
+		
+	
 		
 	}
 	
