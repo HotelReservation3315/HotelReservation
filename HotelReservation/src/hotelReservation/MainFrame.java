@@ -46,6 +46,9 @@ public class MainFrame extends JFrame implements ActionListener {
 	JLabel phoneLabel;
 	JLabel emailLabel;
 	JLabel checkOutSummaryLabel;
+	JLabel BillLabel;
+	JLabel BillSummaryLabel;
+	JLabel BillSummaryLabel2;
 
 	JComboBox<String> typeOfRoom;
 	JComboBox<String> specificRoom;
@@ -98,6 +101,9 @@ public class MainFrame extends JFrame implements ActionListener {
 	String ccNum;
 	String checkIn; // Date
 	String checkOut; // Date
+	String onePersonFee;
+	String twoPersonFee;
+	String extraPersonFee;
 	int roomID; // Identifies each type of room in the Database (1 to 16).
 	int guestID;
 	String roomNumber; // Identifies each room with: roomID + numAvailable.
@@ -373,6 +379,19 @@ public class MainFrame extends JFrame implements ActionListener {
 		checkOutTextField.setBounds(293, 122, 100, 20);
 		checkOutTextField.setVisible(false);
 		
+		BillLabel = new JLabel("Bill:");
+		BillLabel.setFont(new Font("Courier", Font.BOLD, 17));
+		BillLabel.setBounds(120, 0, 50, 50);
+		BillLabel.setVisible(false);
+		
+		BillSummaryLabel = new JLabel();
+		BillSummaryLabel.setBounds(200, 40, 200, 260);
+		BillSummaryLabel.setVisible(false);
+		
+		BillSummaryLabel2 = new JLabel();
+		BillSummaryLabel2.setBounds(10, 40, 200, 260);
+		BillSummaryLabel2.setVisible(false);
+		
 		
 
 		JPanel p = new JPanel();
@@ -433,6 +452,9 @@ public class MainFrame extends JFrame implements ActionListener {
 		p.add(emailTextField);
 		p.add(makeReservation);
 		p.add(checkOutSummaryLabel);
+		p.add(BillLabel);
+		p.add(BillSummaryLabel);
+		p.add(BillSummaryLabel2);
 
 		frame.add(p);
 		frame.setSize(WIDTH, HEIGHT);
@@ -508,25 +530,25 @@ public class MainFrame extends JFrame implements ActionListener {
 
 	public void actionPerformed(ActionEvent event) {
 
-		if (event.getSource() == CheckInOption) {
+		if(event.getSource() == CheckInOption) {
 			goToCheckInScreen();
 		}
 
-		if (event.getSource() == CheckOutOption) {
+		if(event.getSource() == CheckOutOption) {
 			goToCheckOutScreen();
 		}
 
-		if (event.getSource() == toMainScreenButton) {
+		if(event.getSource() == toMainScreenButton) {
 			goToMainScreen();
 		}
 
-		if (event.getSource() == proceedToCheckout) {
+		if(event.getSource() == proceedToCheckout) {
 			searchRoom();
 		}
 
-		if (event.getSource() == CheckAvailabilityButton) {
+		if(event.getSource() == CheckAvailabilityButton) {
 
-			if (typeOfRoom.getSelectedItem() != null
+			if(typeOfRoom.getSelectedItem() != null
 					&& specificRoom.getSelectedItem() != null
 					&& locationOfRoom.getSelectedItem() != null
 					&& numberOfPeople.getSelectedItem() != null
@@ -575,10 +597,81 @@ public class MainFrame extends JFrame implements ActionListener {
 				
 			}else{
 				JOptionPane.showMessageDialog(null,	"Please select an option from all fields.");
-			}
-			
+			}	
 		}
-	}
+		
+		if(event.getSource() == generateBill) {
+			if(checkOutTextField.getText().length() > 0){ // If a check-out date is selected.
+				goToBillScreen();
+				
+				try {
+					Class.forName( "sun.jdbc.odbc.JdbcOdbcDriver" );
+					Connection connection = DriverManager.getConnection("jdbc:odbc:hotelreservation");
+					Statement statement =  connection.createStatement();
+					
+					checkOut = checkOutTextField.getText();
+					
+					String s1 = "UPDATE visit SET checkOut = '" + checkOut + "' WHERE roomNumber = '" + roomNumber + "'";
+					
+					statement.addBatch(s1);
+					statement.executeBatch();
+					
+					String s2 = "SELECT * FROM rooms WHERE roomID = "+roomID+" ";
+					ResultSet resultSet2 = statement.executeQuery(s2);
+						while(resultSet2.next()){
+							onePersonFee = resultSet2.getString(6);
+							twoPersonFee = resultSet2.getString(7);
+							extraPersonFee = resultSet2.getString(8);
+						}
+						//System.out.println(onePersonFee);		
+						//System.out.println(noP);	
+					statement.close();
+			        connection.close();
+			        
+			        BillSummaryLabel.setText("<html> Type of Room: <font color='red'>"+ toR + "</font> " +
+							"<br> Characteristics: <font color='red'>"+ chaR + "</font>" +
+							" <br> Location of Room: <font color='red'>" + loR + "</font>" +
+							" <br> Number of People: <font color='red'>" + noP + "</font>" +
+							" <br> Check-in Date: <font color='red'>" + checkIn + "</font>" +
+							" <br> Check-out Date: <font color='red'>" + checkOut + "</font>" +
+							" <br><br> Name of Guest: <font color='red'>" + fName + "</font>" +
+							" <br> Last Name of Guest: <font color='red'>" + lName + "</font>" +
+							" <br> Address 1: <font color='red'>" + add1 + "</font>" +
+							" <br> Address 2: <font color='red'>" + add2 + "</font>" +
+							" <br> City: <font color='red'>" + city + "</font>" +
+							" <br> State: <font color='red'>" + state + "</font>" +
+							" <br> Zip Code: <font color='red'>" + zip + "</font>" +
+							" <br> Phone: <font color='red'>" + phone + "</font>" +
+							" <br> Email: <font color='red'>" + email + "</font></html>");
+			        
+			        /*int priceOfRoom = 0;
+			        if(Integer.parseInt(noP) == 1){
+			        	priceOfRoom = Integer.parseInt(onePersonFee);
+			        }else if(Integer.parseInt(noP) == 2){
+			        	priceOfRoom = Integer.parseInt(twoPersonFee);
+			        }else{
+			        	
+			        }*/
+			        //String aux = Integer.toString(priceOfRoom);
+			        /*BillSummaryLabel2.setText("<html> Price per Night: <br> <font color='red'>"+ Integer.toString(priceOfRoom) + "</font> " +
+							"<br> Duration of Stay: <font color='red'>"+ chaR + "</font> </html>");*/
+			        
+				}
+				catch ( SQLException sqlException ) { // detect problems interacting with the database
+			        JOptionPane.showMessageDialog( null, sqlException.getMessage(), "Database Error", JOptionPane.ERROR_MESSAGE );
+			        System.exit( 1 );
+			    }
+			    catch ( ClassNotFoundException classNotFound ) { // detect problems loading database driver
+			        JOptionPane.showMessageDialog( null, classNotFound.getMessage(), "Driver Not Found", JOptionPane.ERROR_MESSAGE );
+			        System.exit( 1 );
+			    }
+				
+			}else{
+				JOptionPane.showMessageDialog(null,	"Please indicate today's date (Check-out Date)");
+			}
+		}
+		
+	} // END OF Action Listeners
 
 	
 	private void searchRoom() {
@@ -670,8 +763,9 @@ public class MainFrame extends JFrame implements ActionListener {
 	        System.exit( 1 );
 	    }
 		
-	}
-
+	} // END OF search METHOD
+	
+	
 	// Returns true if there is at least one room available meeting the
 	// specifications
 	// type t, location l, and characteristics ch.
@@ -1060,9 +1154,32 @@ public class MainFrame extends JFrame implements ActionListener {
 		makeReservation.setVisible(false);
 		
 		checkOutSummaryLabel.setVisible(false);
+		BillLabel.setVisible(false);
+		BillSummaryLabel.setVisible(false);
+		BillSummaryLabel2.setVisible(false);
 
 		CheckInOption.setVisible(true);
 		CheckOutOption.setVisible(true);
+	}
+	
+	private void goToBillScreen() {
+		additionalChargesLabel.setVisible(false);
+		telephoneCheckBox.setVisible(false);
+		roomServiceCheckBox.setVisible(false);
+		equestrianAdventureCheckBox.setVisible(false);
+		restaurantCheckBox.setVisible(false);
+		generateBill.setVisible(false);
+		checkOutSummaryLabel.setVisible(false);
+		checkOutTextField.setVisible(false);
+		telephoneTextField.setVisible(false);
+		roomServiceTextField.setVisible(false);
+		equestrianAdventureTextField.setVisible(false);
+		restaurantTextField.setVisible(false);
+		
+		BillLabel.setVisible(true);
+		BillSummaryLabel.setVisible(true);
+		BillSummaryLabel2.setVisible(true);
+		
 	}
 	
 }
