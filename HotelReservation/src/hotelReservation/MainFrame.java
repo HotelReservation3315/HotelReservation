@@ -101,13 +101,14 @@ public class MainFrame extends JFrame implements ActionListener {
 	String ccNum;
 	String checkIn; // Date
 	String checkOut; // Date
-	String onePersonFee;
-	String twoPersonFee;
-	String extraPersonFee;
+	float onePersonFee;
+	float twoPersonFee;
+	float extraPersonFee;
 	int roomID; // Identifies each type of room in the Database (1 to 16).
 	int guestID;
 	String roomNumber; // Identifies each room with: roomID + numAvailable.
 	int numAvailable; // Indicates how many rooms are available.
+	int numInBuilding; // Indicates how many rooms the hotel has.
 	boolean isInDatabase = false; // Indicates if a room is in the database.
 	
 	public MainFrame() {
@@ -620,12 +621,19 @@ public class MainFrame extends JFrame implements ActionListener {
 					String s2 = "SELECT * FROM rooms WHERE roomID = "+roomID+" ";
 					ResultSet resultSet2 = statement.executeQuery(s2);
 						while(resultSet2.next()){
-							onePersonFee = resultSet2.getString(6);
-							twoPersonFee = resultSet2.getString(7);
-							extraPersonFee = resultSet2.getString(8);
+							onePersonFee = resultSet2.getFloat(6);
+							twoPersonFee = resultSet2.getFloat(7);
+							extraPersonFee = resultSet2.getFloat(8);
 						}
 						//System.out.println(onePersonFee);		
 						//System.out.println(noP);	
+						
+					String s3 = "DELETE FROM guest WHERE guestID = "+guestID+"";
+						
+					statement.addBatch(s3);					
+					statement.executeBatch();	
+						
+						
 					statement.close();
 			        connection.close();
 			        
@@ -645,17 +653,23 @@ public class MainFrame extends JFrame implements ActionListener {
 							" <br> Phone: <font color='red'>" + phone + "</font>" +
 							" <br> Email: <font color='red'>" + email + "</font></html>");
 			        
-			        /*int priceOfRoom = 0;
-			        if(Integer.parseInt(noP) == 1){
-			        	priceOfRoom = Integer.parseInt(onePersonFee);
-			        }else if(Integer.parseInt(noP) == 2){
-			        	priceOfRoom = Integer.parseInt(twoPersonFee);
+			        float priceOfRoom = 0;
+			        String priceOfRoomAUX = "";
+			        int noPAUX = Integer.parseInt(noP);
+			        if(noPAUX == 1){
+			        	priceOfRoom = onePersonFee;
+			        	priceOfRoomAUX = "1 person = " + Float.toString(onePersonFee);
+			        }else if(noPAUX == 2){
+			        	priceOfRoom = twoPersonFee;
+			        	priceOfRoomAUX = "2 persons = " + Float.toString(twoPersonFee);
 			        }else{
-			        	
-			        }*/
+			        	priceOfRoom = onePersonFee + (noPAUX)*extraPersonFee; // Total per night.
+			        	priceOfRoomAUX = noP + " persons = " + Float.toString(twoPersonFee) + " + " + Integer.toString(noPAUX-1) + "*" + Float.toString(extraPersonFee);
+			        }
 			        //String aux = Integer.toString(priceOfRoom);
-			        /*BillSummaryLabel2.setText("<html> Price per Night: <br> <font color='red'>"+ Integer.toString(priceOfRoom) + "</font> " +
-							"<br> Duration of Stay: <font color='red'>"+ chaR + "</font> </html>");*/
+			        BillSummaryLabel2.setText("<html> Price per Night: <font color='red'>"+ Float.toString(priceOfRoom) + 
+			        		"<br>"+ priceOfRoomAUX + "</font> " +
+							"<br> Duration of Stay: <font color='red'>"+ "" + "</font> </html>");
 			        
 				}
 				catch ( SQLException sqlException ) { // detect problems interacting with the database
@@ -685,15 +699,18 @@ public class MainFrame extends JFrame implements ActionListener {
 				String s1 = "SELECT * FROM visit WHERE roomNumber = '"+roomNumberTextField.getText()+"'";
 				ResultSet resultSet1 = statement.executeQuery(s1);
 				
-					while(resultSet1.next()){
+				while(resultSet1.next()){
+						//resultSet1.next(); // Positions the cursor on the first element of the row.	
 						roomNumber = resultSet1.getString(1);
 						roomID = Integer.parseInt(resultSet1.getString(2));
 						guestID = Integer.parseInt(resultSet1.getString(3));
 						noP = resultSet1.getString(4);
 						checkIn = resultSet1.getString(5);
-					}
+						checkOut = resultSet1.getString(6);
+				}
+						//System.out.println(checkOut);
 					
-					if(roomNumber != null/*true*/){ // If the room exists in the database (the person checked-in)
+					if(roomNumber != null && checkOut == null){ // If the room exists in the database (the person checked-in) and the guest hasn't checked-out yet.
 						goToAdditionalChargesScreen();
 						isInDatabase = true;
 						
@@ -784,6 +801,7 @@ public class MainFrame extends JFrame implements ActionListener {
 			ResultSet resultSet1 = statement.executeQuery(s1);
 			while (resultSet1.next()) {
 				numAvailable = resultSet1.getInt(5);
+				numInBuilding = resultSet1.getInt(9);
 				// debugging
 				System.out.println("numAvailable = " + numAvailable);
 				if (numAvailable > 0){
@@ -898,18 +916,52 @@ public class MainFrame extends JFrame implements ActionListener {
 	// Returns the roomNumber for the check in confirmation.
 	private String visitIn(int roomID, int guestID, int numOfPeople, String inDate/*, String outDate*/) {
 
-		String roomNum = Integer.toString(roomID) + Integer.toString(numAvailable);
+		String roomNum = "";
 
 		try {
 			Class.forName("sun.jdbc.odbc.JdbcOdbcDriver");
 			Connection connection = DriverManager.getConnection("jdbc:odbc:hotelreservation");
 			Statement statement = connection.createStatement();
-
-			roomNum = Integer.toString(roomID) + "-" + Integer.toString(numAvailable); // Identifies each room with: roomID + numAvailable.
 			
+			int i = 0;
+			while(true){ // We have to check that a certain room is available or not, in order to use it.
+				
+				roomNum = Integer.toString(roomID) + "-" + Integer.toString(numInBuilding-i); // Generates a room Number that identifies each room with: roomID + numAvailable.
+						
+				String s3 = "SELECT * FROM visit WHERE roomNumber = '"+roomNum+"'";
+				ResultSet resultSet2 = statement.executeQuery(s3);
+			
+				//String roomNumberAUX = null;
+				boolean c1 = false;
+			
+					if (!resultSet2.next() ) { // We first check if the number of the room is on the table "visit".
+						System.out.println("free");
+						break; // If it is not, this means the room hasn't been added previously to the database, so it is free.
+					}else{
+						c1 = true; // If it is, this means that the room was previously rented and is still occupied.
+					}
+			
+				//boolean c2 = false;
+					if(c1 == true){
+						String s2 = "SELECT * FROM visit WHERE roomNumber = '"+roomNum+"' AND checkOut = '' "; // So we see if for that room, a check-out date has been entered.
+						ResultSet resultSet1 = statement.executeQuery(s2);
+			
+						//roomNumberAUX = null;
+			
+							if (!resultSet1.next() ) { // If the check-out field in the database (for that specific room) is empty, it means the room is been used.
+								System.out.println("occupied");	
+								roomNum = Integer.toString(roomID) + "-" + Integer.toString(numInBuilding-i);
+								i++; // We try in the next iteration, with the next room for that specific type of room.
+							}else{ // If not, it means the room is available.
+								//c2 = true;
+								break;
+							}
+					}
+			} 
+				
+
 			String s1 = "INSERT INTO visit(roomNumber, roomID, guestID, numOfPeople, checkIn) ";
 			s1 = s1 + "VALUES ('" + roomNum + "','" + roomID + "', '" + guestID + "', '" + numOfPeople + "', '" + inDate + "')";
-			//s1 = s1 + "', '" + outDate + "')";
 
 			statement.addBatch(s1);
 			statement.executeBatch();
