@@ -87,7 +87,7 @@ public class MainFrame extends JFrame implements ActionListener {
 	JCheckBox roomServiceCheckBox;
 	JCheckBox equestrianAdventureCheckBox;
 	JCheckBox restaurantCheckBox;
-	
+
 	String toR;
 	String chaR;
 	String loR;
@@ -116,9 +116,9 @@ public class MainFrame extends JFrame implements ActionListener {
 	int guestID;
 	int numAvailable; // Indicates how many rooms are available.
 	int numInBuilding; // Indicates how many rooms the hotel has.
-	
+
 	final float TAX = (float) 0.1; // 10% of TAX.
-	
+
 	public MainFrame() {
 
 		checkInTitle = new JLabel("CHECK-IN:");
@@ -159,7 +159,10 @@ public class MainFrame extends JFrame implements ActionListener {
 			@Override
 			public void itemStateChanged(ItemEvent arg0) {
 				specificRoom.removeAllItems(); // Clears the ComboBox
-				toR = typeOfRoom.getSelectedItem().toString(); // Gets the selected option from Type of Room.
+				toR = typeOfRoom.getSelectedItem().toString(); // Gets the
+																// selected
+																// option from
+																// Type of Room.
 
 				if (toR == "Luxury") {
 					specificRoom.addItem("1 Queen Bed");
@@ -205,13 +208,14 @@ public class MainFrame extends JFrame implements ActionListener {
 		numberOfPeople.addItem(5);
 		numberOfPeople.addItem(6);
 		numberOfPeople.addItem(7);
-		numberOfPeople.setSelectedItem(null); // Doesn't select any option by default in the ComboBox.
+		numberOfPeople.setSelectedItem(null); // Doesn't select any option by
+												// default in the ComboBox.
 
 		CheckAvailabilityButton = new JButton("Check Availability");
 		CheckAvailabilityButton.setBounds(20, 210, 150, 25);
 		CheckAvailabilityButton.setVisible(false);
 		CheckAvailabilityButton.addActionListener(this);
-		
+
 		toMainScreenButton = new JButton("To Main Screen");
 		toMainScreenButton.setBounds(300, 320, 125, 25);
 		toMainScreenButton.setVisible(false);
@@ -288,119 +292,118 @@ public class MainFrame extends JFrame implements ActionListener {
 		generateBill.setBounds(10, 320, 120, 25);
 		generateBill.setVisible(false);
 		generateBill.addActionListener(this);
-		
+
 		guestInfoLabel = new JLabel("Guest Information:");
 		guestInfoLabel.setFont(new Font("Courier", Font.BOLD, 17));
 		guestInfoLabel.setBounds(100, 0, 200, 50);
 		guestInfoLabel.setVisible(false);
-		
+
 		descriptionOfRoomLabel = new JLabel();
 		descriptionOfRoomLabel.setBounds(10, 20, 200, 100);
 		descriptionOfRoomLabel.setVisible(false);
-			
+
 		firstNameOfGuestLabel = new JLabel("First Name: ");
 		firstNameOfGuestTextField = new JTextField(10);
-		
+
 		firstNameOfGuestLabel.setBounds(10, 70, 100, 100);
 		firstNameOfGuestLabel.setVisible(false);
 		firstNameOfGuestTextField.setBounds(80, 110, 110, 20);
 		firstNameOfGuestTextField.setVisible(false);
-		
+
 		lastNameOfGuestLabel = new JLabel("Last Name: ");
 		lastNameOfGuestTextField = new JTextField(10);
-		
+
 		lastNameOfGuestLabel.setBounds(10, 95, 100, 100);
 		lastNameOfGuestLabel.setVisible(false);
 		lastNameOfGuestTextField.setBounds(80, 135, 110, 20);
 		lastNameOfGuestTextField.setVisible(false);
-		
+
 		address1Label = new JLabel("Address 1: ");
 		address1TextField = new JTextField(10);
-		
+
 		address1Label.setBounds(10, 120, 100, 100);
 		address1Label.setVisible(false);
 		address1TextField.setBounds(80, 160, 110, 20);
 		address1TextField.setVisible(false);
-		
+
 		address2Label = new JLabel("Address 2: ");
 		address2TextField = new JTextField(10);
-		
+
 		address2Label.setBounds(10, 145, 100, 100);
 		address2Label.setVisible(false);
 		address2TextField.setBounds(80, 185, 110, 20);
 		address2TextField.setVisible(false);
-		
+
 		cityLabel = new JLabel("City: ");
 		cityTextField = new JTextField(10);
-		
+
 		cityLabel.setBounds(10, 170, 100, 100);
 		cityLabel.setVisible(false);
 		cityTextField.setBounds(80, 210, 110, 20);
 		cityTextField.setVisible(false);
-		
+
 		stateLabel = new JLabel("State: ");
 		stateTextField = new JTextField(10);
-		
+
 		stateLabel.setBounds(10, 195, 100, 100);
 		stateLabel.setVisible(false);
 		stateTextField.setBounds(80, 235, 110, 20);
 		stateTextField.setVisible(false);
-		
+
 		phoneLabel = new JLabel("Phone: ");
 		phoneTextField = new JTextField(10);
-		
+
 		phoneLabel.setBounds(10, 220, 100, 100);
 		phoneLabel.setVisible(false);
 		phoneTextField.setBounds(80, 260, 110, 20);
 		phoneTextField.setVisible(false);
-		
+
 		zipCodeLabel = new JLabel("Zip Code: ");
 		zipCodeTextField = new JTextField(10);
-		
+
 		zipCodeLabel.setBounds(10, 245, 100, 100);
 		zipCodeLabel.setVisible(false);
 		zipCodeTextField.setBounds(80, 285, 110, 20);
 		zipCodeTextField.setVisible(false);
-		
+
 		emailLabel = new JLabel("Email: ");
 		emailTextField = new JTextField(10);
-		
+
 		emailLabel.setBounds(10, 270, 100, 100);
 		emailLabel.setVisible(false);
 		emailTextField.setBounds(80, 310, 110, 20);
 		emailTextField.setVisible(false);
-		
+
 		makeReservation = new JButton("Make Reservation");
 		makeReservation.setBounds(235, 65, 160, 35);
 		makeReservation.setVisible(false);
 		makeReservation.addActionListener(this);
-		
+
 		checkOutSummaryLabel = new JLabel();
 		checkOutSummaryLabel.setBounds(200, 40, 200, 260);
 		checkOutSummaryLabel.setVisible(false);
-		
+
 		checkOutTextField = new JTextField(10);
 		checkOutTextField.setBounds(293, 122, 100, 20);
 		checkOutTextField.setVisible(false);
-		
+
 		BillLabel = new JLabel("Bill:");
 		BillLabel.setFont(new Font("Courier", Font.BOLD, 17));
 		BillLabel.setBounds(120, 0, 50, 50);
 		BillLabel.setVisible(false);
-		
+
 		BillSummaryLabel = new JLabel();
 		BillSummaryLabel.setBounds(200, 40, 200, 260);
 		BillSummaryLabel.setVisible(false);
-		
+
 		BillSummaryLabel2 = new JLabel();
 		BillSummaryLabel2.setBounds(10, 40, 200, 260);
 		BillSummaryLabel2.setVisible(false);
-		
+
 		printBillButton = new JButton("Print");
 		printBillButton.setBounds(10, 320, 120, 25);
 		printBillButton.setVisible(false);
 		printBillButton.addActionListener(this);
-		
 
 		JPanel p = new JPanel();
 		p.setLayout(null);
@@ -538,33 +541,39 @@ public class MainFrame extends JFrame implements ActionListener {
 
 	public void actionPerformed(ActionEvent event) {
 
-		if(event.getSource() == CheckInOption) {
+		if (event.getSource() == CheckInOption) {
 			goToCheckInScreen();
 		}
 
-		if(event.getSource() == CheckOutOption) {
+		if (event.getSource() == CheckOutOption) {
 			goToCheckOutScreen();
 		}
 
-		if(event.getSource() == toMainScreenButton) {
+		if (event.getSource() == toMainScreenButton) {
 			goToMainScreen();
 		}
 
-		if(event.getSource() == proceedToCheckout) {
+		if (event.getSource() == proceedToCheckout) {
 			searchRoom();
 		}
-		
-		if(event.getSource() == printBillButton) {
+
+		if (event.getSource() == printBillButton) {
 			print();
 		}
 
-		if(event.getSource() == CheckAvailabilityButton) {
+		if (event.getSource() == CheckAvailabilityButton) {
 
-			if(typeOfRoom.getSelectedItem() != null
+			if (typeOfRoom.getSelectedItem() != null
 					&& specificRoom.getSelectedItem() != null
 					&& locationOfRoom.getSelectedItem() != null
 					&& numberOfPeople.getSelectedItem() != null
-					&& checkInTextField.getText().length() > 0) { // Checks if the fields are completed by the user.
+					&& checkInTextField.getText().length() > 0) { // Checks if
+																	// the
+																	// fields
+																	// are
+																	// completed
+																	// by the
+																	// user.
 
 				toR = typeOfRoom.getSelectedItem().toString();
 				chaR = specificRoom.getSelectedItem().toString();
@@ -573,20 +582,31 @@ public class MainFrame extends JFrame implements ActionListener {
 
 				roomID = checkAvailability(toR, loR, chaR);
 
-			}else{
-				JOptionPane.showMessageDialog(null,	"Please select an option from all fields.");
+			} else {
+				JOptionPane.showMessageDialog(null,
+						"Please select an option from all fields.");
 			}
 		}
-		
-		if(event.getSource() == makeReservation){
-			
-			if(firstNameOfGuestTextField.getText().length() > 0 && lastNameOfGuestTextField.getText().length() > 0 
-					&& address1TextField.getText().length() > 0 && address2TextField.getText().length() > 0
-					&& cityTextField.getText().length() > 0 && stateTextField.getText().length() > 0
-					&& phoneTextField.getText().length() > 0 && zipCodeTextField.getText().length() > 0
+
+		if (event.getSource() == makeReservation) {
+
+			if (firstNameOfGuestTextField.getText().length() > 0
+					&& lastNameOfGuestTextField.getText().length() > 0
+					&& address1TextField.getText().length() > 0
+					&& address2TextField.getText().length() > 0
+					&& cityTextField.getText().length() > 0
+					&& stateTextField.getText().length() > 0
+					&& phoneTextField.getText().length() > 0
+					&& zipCodeTextField.getText().length() > 0
 					&& emailTextField.getText().length() > 0
-					/*&& creditCardNumberTextField.getText() != null*/){ // Checks if the fields are completed by the user.
-				
+			/* && creditCardNumberTextField.getText() != null */) { // Checks if
+																	// the
+																	// fields
+																	// are
+																	// completed
+																	// by the
+																	// user.
+
 				fName = firstNameOfGuestTextField.getText();
 				lName = lastNameOfGuestTextField.getText();
 				add1 = address1TextField.getText();
@@ -596,230 +616,336 @@ public class MainFrame extends JFrame implements ActionListener {
 				zip = zipCodeTextField.getText();
 				phone = phoneTextField.getText();
 				email = emailTextField.getText();
-				//ccNum = creditCardNumberTextField.getText();
-				
-				
-				guestID = guestIn(fName, lName, add1, add2, city, state, zip, phone, email/*, ccNum*/);
-				roomNumber = visitIn(roomID, guestID, Integer.parseInt(noP), checkIn/*, checkOut*/);
-				String message = "Your room number is " +  roomNumber;
-				message = message + ". Please remember this number for checkout.";
+				// ccNum = creditCardNumberTextField.getText();
+
+				guestID = guestIn(fName, lName, add1, add2, city, state, zip,
+						phone, email/* , ccNum */);
+				roomNumber = visitIn(roomID, guestID, Integer.parseInt(noP),
+						checkIn/* , checkOut */);
+				String message = "Your room number is " + roomNumber;
+				message = message
+						+ ". Please remember this number for checkout.";
 				goToMainScreen();
 				goToCheckInScreen();
-				JOptionPane.showMessageDialog(null,	message);
-				
-			}else{
-				JOptionPane.showMessageDialog(null,	"Please select an option from all fields.");
-			}	
-		}
-		
-		if(event.getSource() == generateBill) {
-			if(checkOutTextField.getText().length() > 0){ // If a check-out date is selected.
-				goToBillScreen();
-				incrementRoomCount(roomID);
-				
-				try {
-					Class.forName( "sun.jdbc.odbc.JdbcOdbcDriver" );
-					Connection connection = DriverManager.getConnection("jdbc:odbc:hotelreservation");
-					Statement statement =  connection.createStatement();
-					
-					checkOut = checkOutTextField.getText();
-					
-					String s1 = "UPDATE visit SET checkOut = '" + checkOut + "' WHERE roomNumber = '" + roomNumber + "'";
-					
-					statement.addBatch(s1);
-					statement.executeBatch();
-					
-					String s2 = "SELECT * FROM rooms WHERE roomID = "+roomID+" ";
-					ResultSet resultSet2 = statement.executeQuery(s2);
-						while(resultSet2.next()){
-							onePersonFee = resultSet2.getFloat(6);
-							twoPersonFee = resultSet2.getFloat(7);
-							extraPersonFee = resultSet2.getFloat(8);
-						}
-						//System.out.println(onePersonFee);		
-						//System.out.println(noP);	
-						
-					String s3 = "DELETE FROM guest WHERE guestID = "+guestID+"";
-						
-					statement.addBatch(s3);					
-					statement.executeBatch();
-					
-					
-					/*String s4 = "INSERT INTO specialCharges(roomNumber, chargeDescription, fee) ";
-					s4 = s4 + "VALUES ('" + roomNumber + "', '" + chargeDescription + "', '" + chargeFee + "')";
+				JOptionPane.showMessageDialog(null, message);
 
-					statement.addBatch(s4);
-					statement.executeBatch();*/
-						
-					statement.close();
-			        connection.close();
-			        			        
-			        BillSummaryLabel.setText("<html> Type of Room: <font color='red'>"+ toR + "</font> " +
-							"<br> Characteristics: <font color='red'>"+ chaR + "</font>" +
-							" <br> Location of Room: <font color='red'>" + loR + "</font>" +
-							" <br> Number of People: <font color='red'>" + noP + "</font>" +
-							" <br> Check-in Date: <font color='red'>" + checkIn + "</font>" +
-							" <br> Check-out Date: <font color='red'>" + checkOut + "</font>" +
-							" <br><br> Name of Guest: <font color='red'>" + fName + "</font>" +
-							" <br> Last Name of Guest: <font color='red'>" + lName + "</font>" +
-							" <br> Address 1: <font color='red'>" + add1 + "</font>" +
-							" <br> Address 2: <font color='red'>" + add2 + "</font>" +
-							" <br> City: <font color='red'>" + city + "</font>" +
-							" <br> State: <font color='red'>" + state + "</font>" +
-							" <br> Zip Code: <font color='red'>" + zip + "</font>" +
-							" <br> Phone: <font color='red'>" + phone + "</font>" +
-							" <br> Email: <font color='red'>" + email + "</font></html>");
-			        
-			        Days lenghtOfStay= new Days();
-			        int numberOFDays = lenghtOfStay.numberOfDays(checkIn, checkOut); // Calculates the number of days between 2 dates.
-			        
-			        
-			        if(telephoneCheckBox.isSelected()){
-			        	telephoneFee = Float.parseFloat(telephoneTextField.getText());
-			        }
-			        if(restaurantCheckBox.isSelected()){
-			        	 restaurantFee = Float.parseFloat(restaurantTextField.getText());
-			        }
-			        if(equestrianAdventureCheckBox.isSelected()){
-			        	equestrianAdventureFee = Float.parseFloat(equestrianAdventureTextField.getText());
-			        }
-			        if(roomServiceCheckBox.isSelected()){
-			        	roomServiceFee = Float.parseFloat(roomServiceTextField.getText());
-			        }
-			        
-			        float additionalChargesTotal = telephoneFee + equestrianAdventureFee + roomServiceFee + restaurantFee;
-			        
-			        
-			        float priceOfRoom = 0;
-			        String priceOfRoomAUX = "";
-			        int noPAUX = Integer.parseInt(noP);
-			        	if(noPAUX == 1){
-			        		priceOfRoom = onePersonFee;
-			        		priceOfRoomAUX = "1 person = " + Float.toString(onePersonFee);
-			        	}else if(noPAUX == 2){
-			        		priceOfRoom = twoPersonFee;
-			        		priceOfRoomAUX = "2 persons = " + Float.toString(twoPersonFee);
-			        	}else{
-			        		priceOfRoom = onePersonFee + (noPAUX)*extraPersonFee; // Total per night.
-			        		priceOfRoomAUX = noP + " persons = " + Float.toString(twoPersonFee) + " + " + Integer.toString(noPAUX-1) + "*" + Float.toString(extraPersonFee);
-			        	}
-			        
-			        float subTotalRoom = numberOFDays * priceOfRoom;	
-			        float taxRoom = numberOFDays * priceOfRoom * TAX;	
-			        float TOTAL = subTotalRoom + taxRoom + additionalChargesTotal;
-			       
-			        BillSummaryLabel2.setText("<html> Price per night: <font color='red'> "+ Float.toString(priceOfRoom) + 
-			        		"<br>"+ priceOfRoomAUX + "</font> " +
-							"<br> Days in the hotel: <font color='red'>"+ Integer.toString(numberOFDays) + "</font>" +
-							"<br><br> ROOM SUB-TOTAL: <font color='red'>" + Float.toString(subTotalRoom) +
-							"<br>"+ Float.toString(priceOfRoom) + " * " + Integer.toString(numberOFDays)  + "</font>" +
-							"<br> ROOM TAX: <font color='red'>" + Float.toString(taxRoom) + "</font>" +
-							"<br> ADDITIONAL CHARGES: <font color='red'>"+ Float.toString(additionalChargesTotal) + 
-							"<br> telephone: " + Float.toString(telephoneFee) + 
-							"<br> room service: " + Float.toString(roomServiceFee) + 
-							"<br> restaurant: " + Float.toString(restaurantFee) + 
-							"<br> equestrian adventure: " + Float.toString(equestrianAdventureFee) + "</font>" +
-							"<br><br><br> TOTAL: <font color='red'>"+ Float.toString(TOTAL) + " $</font> </html>");
-			        
-				}
-				catch ( SQLException sqlException ) { // detect problems interacting with the database
-			        JOptionPane.showMessageDialog( null, sqlException.getMessage(), "Database Error", JOptionPane.ERROR_MESSAGE );
-			        System.exit( 1 );
-			    }
-			    catch ( ClassNotFoundException classNotFound ) { // detect problems loading database driver
-			        JOptionPane.showMessageDialog( null, classNotFound.getMessage(), "Driver Not Found", JOptionPane.ERROR_MESSAGE );
-			        System.exit( 1 );
-			    }
-				
-			}else{
-				JOptionPane.showMessageDialog(null,	"Please indicate today's date (Check-out Date)");
+			} else {
+				JOptionPane.showMessageDialog(null,
+						"Please select an option from all fields.");
 			}
 		}
-		
+
+		if (event.getSource() == generateBill) {
+			if (checkOutTextField.getText().length() > 0) { // If a check-out
+															// date is selected.
+				goToBillScreen();
+				incrementRoomCount(roomID);
+
+				try {
+					Class.forName("sun.jdbc.odbc.JdbcOdbcDriver");
+					Connection connection = DriverManager
+							.getConnection("jdbc:odbc:hotelreservation");
+					Statement statement = connection.createStatement();
+
+					checkOut = checkOutTextField.getText();
+
+					String s1 = "UPDATE visit SET checkOut = '" + checkOut
+							+ "' WHERE roomNumber = '" + roomNumber + "'";
+
+					statement.addBatch(s1);
+					statement.executeBatch();
+
+					String s2 = "SELECT * FROM rooms WHERE roomID = " + roomID
+							+ " ";
+					ResultSet resultSet2 = statement.executeQuery(s2);
+					while (resultSet2.next()) {
+						onePersonFee = resultSet2.getFloat(6);
+						twoPersonFee = resultSet2.getFloat(7);
+						extraPersonFee = resultSet2.getFloat(8);
+					}
+					// System.out.println(onePersonFee);
+					// System.out.println(noP);
+
+//					String s3 = "DELETE FROM guest WHERE guestID = " + guestID
+//							+ "";
+//
+//					statement.addBatch(s3);
+//					statement.executeBatch();
+
+					statement.close();
+					connection.close();
+
+					BillSummaryLabel
+							.setText("<html> Type of Room: <font color='red'>"
+									+ toR
+									+ "</font> "
+									+ "<br> Characteristics: <font color='red'>"
+									+ chaR
+									+ "</font>"
+									+ " <br> Location of Room: <font color='red'>"
+									+ loR
+									+ "</font>"
+									+ " <br> Number of People: <font color='red'>"
+									+ noP
+									+ "</font>"
+									+ " <br> Check-in Date: <font color='red'>"
+									+ checkIn
+									+ "</font>"
+									+ " <br> Check-out Date: <font color='red'>"
+									+ checkOut
+									+ "</font>"
+									+ " <br><br> Name of Guest: <font color='red'>"
+									+ fName
+									+ "</font>"
+									+ " <br> Last Name of Guest: <font color='red'>"
+									+ lName + "</font>"
+									+ " <br> Address 1: <font color='red'>"
+									+ add1 + "</font>"
+									+ " <br> Address 2: <font color='red'>"
+									+ add2 + "</font>"
+									+ " <br> City: <font color='red'>" + city
+									+ "</font>"
+									+ " <br> State: <font color='red'>" + state
+									+ "</font>"
+									+ " <br> Zip Code: <font color='red'>"
+									+ zip + "</font>"
+									+ " <br> Phone: <font color='red'>" + phone
+									+ "</font>"
+									+ " <br> Email: <font color='red'>" + email
+									+ "</font></html>");
+
+					Days lenghtOfStay = new Days();
+					int numberOFDays = lenghtOfStay.numberOfDays(checkIn,
+							checkOut); // Calculates the number of days between
+										// 2 dates.
+
+					if (telephoneCheckBox.isSelected()) {
+						telephoneFee = Float.parseFloat(telephoneTextField
+								.getText());
+						recordSpecialCharge(roomNumber, "Telephone Fee", Float.toString(telephoneFee));
+					}
+					if (restaurantCheckBox.isSelected()) {
+						restaurantFee = Float.parseFloat(restaurantTextField
+								.getText());
+						recordSpecialCharge(roomNumber, "Restaurant Fee", Float.toString(restaurantFee));
+					}
+					if (equestrianAdventureCheckBox.isSelected()) {
+						equestrianAdventureFee = Float
+								.parseFloat(equestrianAdventureTextField
+										.getText());
+						recordSpecialCharge(roomNumber, "Equestrian Adventure", Float.toString(equestrianAdventureFee));
+					}
+					if (roomServiceCheckBox.isSelected()) {
+						roomServiceFee = Float.parseFloat(roomServiceTextField
+								.getText());
+						recordSpecialCharge(roomNumber, "Room Service", Float.toString(roomServiceFee));
+					}
+
+					float additionalChargesTotal = telephoneFee
+							+ equestrianAdventureFee + roomServiceFee
+							+ restaurantFee;
+
+					float priceOfRoom = 0;
+					String priceOfRoomAUX = "";
+					int noPAUX = Integer.parseInt(noP);
+					if (noPAUX == 1) {
+						priceOfRoom = onePersonFee;
+						priceOfRoomAUX = "1 person = "
+								+ String.format("%.2f", onePersonFee);
+					} else if (noPAUX == 2) {
+						priceOfRoom = twoPersonFee;
+						priceOfRoomAUX = "2 persons = "
+								+ String.format("%.2f", twoPersonFee);
+					} else {
+						priceOfRoom = twoPersonFee + (noPAUX - 2) * extraPersonFee; // Total
+																				// per
+																				// night.
+						priceOfRoomAUX = noP + " persons = "
+								+ String.format("%.2f", twoPersonFee) + " + "
+								+ Integer.toString(noPAUX - 2) + "*"
+								+ String.format("%.2f", extraPersonFee);
+					}
+
+					float subTotalRoom = numberOFDays * priceOfRoom;
+					float taxRoom = numberOFDays * priceOfRoom * TAX;
+					float TOTAL = subTotalRoom + taxRoom
+							+ additionalChargesTotal;
+
+					BillSummaryLabel2
+							.setText("<html> Price per night: <font color='red'> "
+									+ String.format("%.2f", priceOfRoom)
+									+ "<br>"
+									+ priceOfRoomAUX
+									+ "</font> "
+									+ "<br> Days in the hotel: <font color='red'>"
+									+ Integer.toString(numberOFDays)
+									+ "</font>"
+									+ "<br><br> ROOM SUB-TOTAL: <font color='red'>"
+									+ String.format("%.2f", subTotalRoom)
+									+ "<br>"
+									+ String.format("%.2f", priceOfRoom)
+									+ " * "
+									+ Integer.toString(numberOFDays)
+									+ "</font>"
+									+ "<br> ROOM TAX: <font color='red'>"
+									+ String.format("%.2f", taxRoom)
+									+ "</font>"
+									+ "<br> ADDITIONAL CHARGES: <font color='red'>"
+									+ String.format("%.2f", additionalChargesTotal)
+									+ "<br> telephone: "
+									+ String.format("%.2f", telephoneFee)
+									+ "<br> room service: "
+									+ String.format("%.2f", roomServiceFee)
+									+ "<br> restaurant: "
+									+ String.format("%.2f", restaurantFee)
+									+ "<br> equestrian adventure: "
+									+ String.format("%.2f", equestrianAdventureFee)
+									+ "</font>"
+									+ "<br><br><br> TOTAL: <font color='red'>"
+									+ String.format("%.2f", TOTAL)
+									+ " $</font> </html>");
+
+				} catch (SQLException sqlException) { // detect problems
+														// interacting with the
+														// database
+					JOptionPane.showMessageDialog(null,
+							sqlException.getMessage(), "Database Error",
+							JOptionPane.ERROR_MESSAGE);
+					System.exit(1);
+				} catch (ClassNotFoundException classNotFound) { // detect
+																	// problems
+																	// loading
+																	// database
+																	// driver
+					JOptionPane.showMessageDialog(null,
+							classNotFound.getMessage(), "Driver Not Found",
+							JOptionPane.ERROR_MESSAGE);
+					System.exit(1);
+				}
+
+			} else {
+				JOptionPane.showMessageDialog(null,
+						"Please indicate today's date (Check-out Date)");
+			}
+		}
+
 	} // END OF Action Listeners
 
-	
 	private void searchRoom() {
 		try {
-			Class.forName( "sun.jdbc.odbc.JdbcOdbcDriver" );
-			Connection connection = DriverManager.getConnection("jdbc:odbc:hotelreservation");
-			Statement statement =  connection.createStatement();
-					    							
-				roomNumber = null;
-				String s1 = "SELECT * FROM visit WHERE roomNumber = '"+roomNumberTextField.getText()+"'";
-				ResultSet resultSet1 = statement.executeQuery(s1);
-				
-				while(resultSet1.next()){
-						roomNumber = resultSet1.getString(1);
-						roomID = Integer.parseInt(resultSet1.getString(2));
-						guestID = Integer.parseInt(resultSet1.getString(3));
-						noP = resultSet1.getString(4);
-						checkIn = resultSet1.getString(5);
-						checkOut = resultSet1.getString(6);
+			Class.forName("sun.jdbc.odbc.JdbcOdbcDriver");
+			Connection connection = DriverManager
+					.getConnection("jdbc:odbc:hotelreservation");
+			Statement statement = connection.createStatement();
+
+			roomNumber = null;
+			String s1 = "SELECT * FROM visit WHERE roomNumber = '"
+					+ roomNumberTextField.getText() + "'";
+			ResultSet resultSet1 = statement.executeQuery(s1);
+
+			while (resultSet1.next()) {
+				roomNumber = resultSet1.getString(1);
+				roomID = Integer.parseInt(resultSet1.getString(2));
+				guestID = Integer.parseInt(resultSet1.getString(3));
+				noP = resultSet1.getString(4);
+				checkIn = resultSet1.getString(5);
+				checkOut = resultSet1.getString(6);
+			}
+
+			if (roomNumber != null && checkOut == null) { // If the room exists
+															// in the database
+															// (the person
+															// checked-in) and
+															// the guest hasn't
+															// checked-out yet.
+				goToAdditionalChargesScreen();
+
+				String s2 = "SELECT * FROM guest WHERE guestID = " + guestID
+						+ " ";
+				ResultSet resultSet2 = statement.executeQuery(s2);
+				while (resultSet2.next()) {
+					fName = resultSet2.getString(2);
+					lName = resultSet2.getString(3);
+					add1 = resultSet2.getString(4);
+					add2 = resultSet2.getString(5);
+					city = resultSet2.getString(6);
+					state = resultSet2.getString(7);
+					zip = resultSet2.getString(8);
+					phone = resultSet2.getString(9);
+					email = resultSet2.getString(10);
 				}
-					
-					if(roomNumber != null && checkOut == null){ // If the room exists in the database (the person checked-in) and the guest hasn't checked-out yet.
-						goToAdditionalChargesScreen();
-						
-						String s2 = "SELECT * FROM guest WHERE guestID = "+guestID+" ";
-						ResultSet resultSet2 = statement.executeQuery(s2);
-							while(resultSet2.next()){
-								fName = resultSet2.getString(2);
-								lName = resultSet2.getString(3);
-								add1 = resultSet2.getString(4);
-								add2 = resultSet2.getString(5);
-								city = resultSet2.getString(6);
-								state = resultSet2.getString(7);
-								zip = resultSet2.getString(8);
-								phone = resultSet2.getString(9);
-								email = resultSet2.getString(10);
-							}
-				
-						String s3 = "SELECT * FROM rooms WHERE roomID = "+roomID+" ";
-						ResultSet resultSet3 = statement.executeQuery(s3);
-							while(resultSet3.next()){
-								toR = resultSet3.getString(2);
-								loR = resultSet3.getString(3);
-								chaR = resultSet3.getString(4);
-							}
-										
-						checkOutSummaryLabel.setText("<html> Type of room: <font color='red'>"+ toR + "</font> " +
-								"<br> Characteristics: <font color='red'>"+ chaR + "</font>" +
-								" <br> Location of Room: <font color='red'>" + loR + "</font>" +
-								" <br> Number of People: <font color='red'>" + noP + "</font>" +
-								" <br> Check-in Date: <font color='red'>" + checkIn + "</font>" +
-								" <br> Check-out Date: " +
-								" <br><br> Name of Guest: <font color='red'>" + fName + "</font>" +
-								" <br> Last Name of Guest: <font color='red'>" + lName + "</font>" +
-								" <br> Address 1: <font color='red'>" + add1 + "</font>" +
-								" <br> Address 2: <font color='red'>" + add2 + "</font>" +
-								" <br> City: <font color='red'>" + city + "</font>" +
-								" <br> State: <font color='red'>" + state + "</font>" +
-								" <br> Zip Code: <font color='red'>" + zip + "</font>" +
-								" <br> Phone: <font color='red'>" + phone + "</font>" +
-								" <br> Email: <font color='red'>" + email + "</font></html>");
-					}else{ // If the room does not exist in the database (the person did not checked-in)
-						JOptionPane.showMessageDialog(null, "The room is not registered.");
-					}
-						
+
+				String s3 = "SELECT * FROM rooms WHERE roomID = " + roomID
+						+ " ";
+				ResultSet resultSet3 = statement.executeQuery(s3);
+				while (resultSet3.next()) {
+					toR = resultSet3.getString(2);
+					loR = resultSet3.getString(3);
+					chaR = resultSet3.getString(4);
+				}
+
+				checkOutSummaryLabel
+						.setText("<html> Type of room: <font color='red'>"
+								+ toR
+								+ "</font> "
+								+ "<br> Characteristics: <font color='red'>"
+								+ chaR
+								+ "</font>"
+								+ " <br> Location of Room: <font color='red'>"
+								+ loR
+								+ "</font>"
+								+ " <br> Number of People: <font color='red'>"
+								+ noP
+								+ "</font>"
+								+ " <br> Check-in Date: <font color='red'>"
+								+ checkIn
+								+ "</font>"
+								+ " <br> Check-out Date: "
+								+ " <br><br> Name of Guest: <font color='red'>"
+								+ fName
+								+ "</font>"
+								+ " <br> Last Name of Guest: <font color='red'>"
+								+ lName + "</font>"
+								+ " <br> Address 1: <font color='red'>" + add1
+								+ "</font>"
+								+ " <br> Address 2: <font color='red'>" + add2
+								+ "</font>" + " <br> City: <font color='red'>"
+								+ city + "</font>"
+								+ " <br> State: <font color='red'>" + state
+								+ "</font>"
+								+ " <br> Zip Code: <font color='red'>" + zip
+								+ "</font>" + " <br> Phone: <font color='red'>"
+								+ phone + "</font>"
+								+ " <br> Email: <font color='red'>" + email
+								+ "</font></html>");
+			} else { // If the room does not exist in the database (the person
+						// did not checked-in)
+				JOptionPane.showMessageDialog(null,
+						"The room is not registered.");
+			}
+
 			statement.close();
-	        connection.close();
-			 
-		} 
-		catch ( SQLException sqlException ) { // detect problems interacting with the database
-	        JOptionPane.showMessageDialog( null, sqlException.getMessage(), "Database Error", JOptionPane.ERROR_MESSAGE );
-	        System.exit( 1 );
-	    }
-	    catch ( ClassNotFoundException classNotFound ) { // detect problems loading database driver
-	        JOptionPane.showMessageDialog( null, classNotFound.getMessage(), "Driver Not Found", JOptionPane.ERROR_MESSAGE );
-	        System.exit( 1 );
-	    }
-		
+			connection.close();
+
+		} catch (SQLException sqlException) { // detect problems interacting
+												// with the database
+			JOptionPane.showMessageDialog(null, sqlException.getMessage(),
+					"Database Error", JOptionPane.ERROR_MESSAGE);
+			System.exit(1);
+		} catch (ClassNotFoundException classNotFound) { // detect problems
+															// loading database
+															// driver
+			JOptionPane.showMessageDialog(null, classNotFound.getMessage(),
+					"Driver Not Found", JOptionPane.ERROR_MESSAGE);
+			System.exit(1);
+		}
+
 	} // END OF search METHOD
-	
-	
-	/* Returns true if there is at least one room available meeting the	specifications
-	   type t, location l, and characteristics ch.*/
+
+	/*
+	 * Returns true if there is at least one room available meeting the
+	 * specifications type t, location l, and characteristics ch.
+	 */
 	private boolean isAvailable(String t, String l, String ch) {
 		boolean available = false;
 
@@ -827,21 +953,24 @@ public class MainFrame extends JFrame implements ActionListener {
 
 			Class.forName("sun.jdbc.odbc.JdbcOdbcDriver");
 			Connection connection = null;
-			connection = DriverManager.getConnection("jdbc:odbc:hotelreservation");
+			connection = DriverManager
+					.getConnection("jdbc:odbc:hotelreservation");
 			Statement statement = connection.createStatement();
 
-			String s1 = "SELECT * FROM rooms where type = '" + t + "' AND location = '" + l + "' AND characteristics = '" + ch + "'";
+			String s1 = "SELECT * FROM rooms where type = '" + t
+					+ "' AND location = '" + l + "' AND characteristics = '"
+					+ ch + "'";
 			ResultSet resultSet1 = statement.executeQuery(s1);
 			while (resultSet1.next()) {
 				numAvailable = resultSet1.getInt(5);
 				numInBuilding = resultSet1.getInt(9);
 				// debugging
-				//System.out.println("numAvailable = " + numAvailable);
-				if (numAvailable > 0){
+				// System.out.println("numAvailable = " + numAvailable);
+				if (numAvailable > 0) {
 					available = true;
 				}
 			}
-			
+
 			statement.close();
 			connection.close();
 
@@ -856,38 +985,47 @@ public class MainFrame extends JFrame implements ActionListener {
 		return available;
 	} // END OF isAvailable METHOD
 
-	/* Returns the roomID if there is at least one room available meeting
-	the specifications type toR, location loR, and characteristics chaR.
-	Returns -1 as the roomID if the user chooses not to continue to booking.*/
+	/*
+	 * Returns the roomID if there is at least one room available meeting the
+	 * specifications type toR, location loR, and characteristics chaR. Returns
+	 * -1 as the roomID if the user chooses not to continue to booking.
+	 */
 	private int checkAvailability(String toR, String loR, String chaR) {
 
 		int result, roomID = -1;
 		if (isAvailable(toR, loR, chaR)) {
-			result = JOptionPane.showConfirmDialog(null,"<html> Number of rooms available of this kind: <font color='red'>"+ numAvailable +"</font> <br> Continue to booking? </html>", "Room Available", JOptionPane.YES_NO_OPTION);
+			result = JOptionPane.showConfirmDialog(null,
+					"<html> Number of rooms available of this kind: <font color='red'>"
+							+ numAvailable
+							+ "</font> <br> Continue to booking? </html>",
+					"Room Available", JOptionPane.YES_NO_OPTION);
 
 			if (result == JOptionPane.YES_OPTION) {
-				
+
 				checkIn = checkInTextField.getText();
-				//checkOut = checkOutTextField.getText();
-				
+				// checkOut = checkOutTextField.getText();
+
 				try {
-					
+
 					Class.forName("sun.jdbc.odbc.JdbcOdbcDriver");
 					Connection connection = null;
-					connection = DriverManager.getConnection("jdbc:odbc:hotelreservation");
+					connection = DriverManager
+							.getConnection("jdbc:odbc:hotelreservation");
 					Statement statement = connection.createStatement();
 
-					String s2 = "SELECT * FROM rooms where type = '" + toR + "' AND location = '" + loR + "' AND characteristics = '" + chaR + "'";
+					String s2 = "SELECT * FROM rooms where type = '" + toR
+							+ "' AND location = '" + loR
+							+ "' AND characteristics = '" + chaR + "'";
 					ResultSet resultSet1 = statement.executeQuery(s2);
-						while (resultSet1.next()) {
-							roomID = resultSet1.getInt(1);
-						}
+					while (resultSet1.next()) {
+						roomID = resultSet1.getInt(1);
+					}
 					// for debugging
-					//System.out.println("roomID = " + roomID);
-					
+					// System.out.println("roomID = " + roomID);
+
 					statement.close();
 					connection.close();
-					
+
 					guestInfo();
 
 				} catch (SQLException e) {
@@ -902,29 +1040,40 @@ public class MainFrame extends JFrame implements ActionListener {
 
 			} // END OF "IF ROOM IS AVAILABLE"
 		} else {
-			result = JOptionPane.showConfirmDialog(null, "No room is available. Try again?", "No Room Available", JOptionPane.YES_NO_OPTION);
+			result = JOptionPane.showConfirmDialog(null,
+					"No room is available. Try again?", "No Room Available",
+					JOptionPane.YES_NO_OPTION);
 		}
 
 		return roomID; // returns -1 if no room available
 
 	} // END OF checkAvailability METHOD
-// END OF booking room and retrieving roomID to identify type/loc/char
+		// END OF booking room and retrieving roomID to identify type/loc/char
 
-
-	/* Inserts guest information into guest table.
-	 Returns the guestID generated for use in inserting into visit table.*/
-	private int guestIn(String fName, String lName, String add1, String add2, String city, String state, String zip, String phone, String email/*, String ccNum*/) {
+	/*
+	 * Inserts guest information into guest table. Returns the guestID generated
+	 * for use in inserting into visit table.
+	 */
+	private int guestIn(String fName, String lName, String add1, String add2,
+			String city, String state, String zip, String phone, String email/*
+																			 * ,
+																			 * String
+																			 * ccNum
+																			 */) {
 
 		int guestNum = 0;
 
 		try {
 			Class.forName("sun.jdbc.odbc.JdbcOdbcDriver");
-			Connection connection = DriverManager.getConnection("jdbc:odbc:hotelreservation");
+			Connection connection = DriverManager
+					.getConnection("jdbc:odbc:hotelreservation");
 			Statement statement = connection.createStatement();
 
 			String s1 = "INSERT INTO guest(firstName, lastName, address1, address2, city, state, zipCode, phone, email, ccNum) ";
-			s1 = s1 + "VALUES ('" + fName + "', '" + lName + "', '" + add1 + "', '" + add2 + "', '" + city;
-			s1 = s1 + "', '" + state + "', '" + zip + "', '" + phone + "', '" + email + "', '1234567891234567')";//dummy cc value
+			s1 = s1 + "VALUES ('" + fName + "', '" + lName + "', '" + add1
+					+ "', '" + add2 + "', '" + city;
+			s1 = s1 + "', '" + state + "', '" + zip + "', '" + phone + "', '"
+					+ email + "', '1234567891234567')";// dummy cc value
 
 			statement.addBatch(s1);
 			statement.executeBatch();
@@ -933,7 +1082,7 @@ public class MainFrame extends JFrame implements ActionListener {
 			ResultSet resultSet = statement.executeQuery(i);
 			resultSet.next();
 			guestNum = resultSet.getInt(1);
-			
+
 			statement.close();
 			connection.close();
 
@@ -945,55 +1094,83 @@ public class MainFrame extends JFrame implements ActionListener {
 		return guestNum;
 	} // END OF method to insert guest information
 
-	/* Inserts visit information into visit table.
-	Returns the roomNumber for the check in confirmation.*/
-	private String visitIn(int roomID, int guestID, int numOfPeople, String inDate) {
+	/*
+	 * Inserts visit information into visit table. Returns the roomNumber for
+	 * the check in confirmation.
+	 */
+	private String visitIn(int roomID, int guestID, int numOfPeople,
+			String inDate) {
 
 		String roomNum = "";
 
 		try {
 			Class.forName("sun.jdbc.odbc.JdbcOdbcDriver");
-			Connection connection = DriverManager.getConnection("jdbc:odbc:hotelreservation");
+			Connection connection = DriverManager
+					.getConnection("jdbc:odbc:hotelreservation");
 			Statement statement = connection.createStatement();
-			
+
 			int i = 0;
-			while(true){ // We have to check that a certain room is available or not, in order to use it.
-				
-				roomNum = Integer.toString(roomID) + "-" + Integer.toString(numInBuilding-i); // Generates a room Number that identifies each room with: roomID + numAvailable.
-						
-				String s3 = "SELECT * FROM visit WHERE roomNumber = '"+roomNum+"'";
+			while (true) { // We have to check that a certain room is available
+							// or not, in order to use it.
+
+				roomNum = Integer.toString(roomID) + "-"
+						+ Integer.toString(numInBuilding - i); // Generates a
+																// room Number
+																// that
+																// identifies
+																// each room
+																// with: roomID
+																// +
+																// numAvailable.
+
+				String s3 = "SELECT * FROM visit WHERE roomNumber = '"
+						+ roomNum + "'";
 				ResultSet resultSet2 = statement.executeQuery(s3);
-			
+
 				boolean c1 = false;
-			
-					if (!resultSet2.next() ) { // We first check if the number of the room is on the table "visit".
-						//System.out.println("free");
-						break; // If it is not, this means the room hasn't been added previously to the database, so it is free.
-					}else{
-						c1 = true; // If it is, this means that the room was previously rented and is still occupied.
+
+				if (!resultSet2.next()) { // We first check if the number of the
+											// room is on the table "visit".
+					// System.out.println("free");
+					break; // If it is not, this means the room hasn't been
+							// added previously to the database, so it is free.
+				} else {
+					c1 = true; // If it is, this means that the room was
+								// previously rented and is still occupied.
+				}
+
+				if (c1 == true) {
+					String s2 = "SELECT * FROM visit WHERE roomNumber = '"
+							+ roomNum + "' AND checkOut = '' "; // So we see if
+																// for that
+																// room, a
+																// check-out
+																// date has been
+																// entered.
+					ResultSet resultSet1 = statement.executeQuery(s2);
+
+					if (!resultSet1.next()) { // If the check-out field in the
+												// database (for that specific
+												// room) is empty, it means the
+												// room is been used.
+						// System.out.println("occupied");
+						roomNum = Integer.toString(roomID) + "-"
+								+ Integer.toString(numInBuilding - i);
+						i++; // We try in the next iteration, with the next room
+								// for that specific type of room.
+					} else { // If not, it means the room is available.
+						break;
 					}
-			
-					if(c1 == true){
-						String s2 = "SELECT * FROM visit WHERE roomNumber = '"+roomNum+"' AND checkOut = '' "; // So we see if for that room, a check-out date has been entered.
-						ResultSet resultSet1 = statement.executeQuery(s2);
-						
-							if (!resultSet1.next() ) { // If the check-out field in the database (for that specific room) is empty, it means the room is been used.
-								//System.out.println("occupied");	
-								roomNum = Integer.toString(roomID) + "-" + Integer.toString(numInBuilding-i);
-								i++; // We try in the next iteration, with the next room for that specific type of room.
-							}else{ // If not, it means the room is available.
-								break;
-							}
-					}
-			} 
-				
+				}
+			}
 
 			String s1 = "INSERT INTO visit(roomNumber, roomID, guestID, numOfPeople, checkIn) ";
-			s1 = s1 + "VALUES ('" + roomNum + "','" + roomID + "', '" + guestID + "', '" + numOfPeople + "', '" + inDate + "')";
+			s1 = s1 + "VALUES ('" + roomNum + "','" + roomID + "', '" + guestID
+					+ "', '" + numOfPeople + "', '" + inDate + "')";
 
 			statement.addBatch(s1);
 			statement.executeBatch();
-			
+
 			statement.close();
 			connection.close();
 
@@ -1002,93 +1179,93 @@ public class MainFrame extends JFrame implements ActionListener {
 		} catch (ClassNotFoundException e) {
 			e.printStackTrace();
 		}
-		
+
 		decrementRoomCount(roomID);
-		
+
 		return roomNum;
 	} // END OF method to insert visit
-	
-	// Decrements the number available for the room category 
-	// indicated by parameter roomID.
-	private void decrementRoomCount(int roomID){
-		
-		try {
-			Class.forName("sun.jdbc.odbc.JdbcOdbcDriver");
-			Connection connection = DriverManager.getConnection("jdbc:odbc:hotelreservation");
-			Statement statement = connection.createStatement();
-		
-		String s1 = "SELECT * FROM rooms WHERE roomID = " + roomID + "";
-		
-		ResultSet resultSet = statement.executeQuery(s1);
-		resultSet.next();
-		int available = resultSet.getInt(5);
-		
-		available--;
-		
-		String s2 = "UPDATE rooms SET numAvailable = '" + available + "' WHERE roomID = " + roomID +"";
-		
-		statement.addBatch(s2);
-		statement.executeBatch();
-		
-		
-		statement.close();
-		connection.close();
-		
-		}catch (SQLException e) {
-			e.printStackTrace();
-		} catch (ClassNotFoundException e) {
-			e.printStackTrace();
-		}
-		
-	} //END OF decrementRoomCount METHOD
 
-	// Increments the number available for the room category 
+	// Decrements the number available for the room category
 	// indicated by parameter roomID.
-	private void incrementRoomCount(int roomID){
-		
+	private void decrementRoomCount(int roomID) {
+
 		try {
 			Class.forName("sun.jdbc.odbc.JdbcOdbcDriver");
-			Connection connection = DriverManager.getConnection("jdbc:odbc:hotelreservation");
+			Connection connection = DriverManager
+					.getConnection("jdbc:odbc:hotelreservation");
 			Statement statement = connection.createStatement();
-		
-		String s1 = "SELECT * FROM rooms WHERE roomID = " + roomID + "";
-		
-		ResultSet resultSet = statement.executeQuery(s1);
-		resultSet.next();
-		int available = resultSet.getInt(5);
-		
-		available++;
-		
-		String s2 = "UPDATE rooms SET numAvailable = '" + available + "' WHERE roomID = " + roomID +"";
-		
-		statement.addBatch(s2);
-		statement.executeBatch();
-		
-		
-		statement.close();
-		connection.close();
-		
-		}catch (SQLException e) {
+
+			String s1 = "SELECT * FROM rooms WHERE roomID = " + roomID + "";
+
+			ResultSet resultSet = statement.executeQuery(s1);
+			resultSet.next();
+			int available = resultSet.getInt(5);
+
+			available--;
+
+			String s2 = "UPDATE rooms SET numAvailable = '" + available
+					+ "' WHERE roomID = " + roomID + "";
+
+			statement.addBatch(s2);
+			statement.executeBatch();
+
+			statement.close();
+			connection.close();
+
+		} catch (SQLException e) {
 			e.printStackTrace();
 		} catch (ClassNotFoundException e) {
 			e.printStackTrace();
 		}
-		
+
+	} // END OF decrementRoomCount METHOD
+
+	// Increments the number available for the room category
+	// indicated by parameter roomID.
+	private void incrementRoomCount(int roomID) {
+
+		try {
+			Class.forName("sun.jdbc.odbc.JdbcOdbcDriver");
+			Connection connection = DriverManager
+					.getConnection("jdbc:odbc:hotelreservation");
+			Statement statement = connection.createStatement();
+
+			String s1 = "SELECT * FROM rooms WHERE roomID = " + roomID + "";
+
+			ResultSet resultSet = statement.executeQuery(s1);
+			resultSet.next();
+			int available = resultSet.getInt(5);
+			
+			available++;
+
+			String s2 = "UPDATE rooms SET numAvailable = '" + available
+					+ "' WHERE roomID = " + roomID + "";
+
+			statement.addBatch(s2);
+			statement.executeBatch();
+
+			statement.close();
+			connection.close();
+
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} catch (ClassNotFoundException e) {
+			e.printStackTrace();
+		}
+
 	} // END OF incrementRoomCount METHOD
-		
-	
-	private void print(){ // PRINT METHOD
+
+	private void print() { // PRINT METHOD
 		PrinterJob pj = PrinterJob.getPrinterJob();
-		if(pj.printDialog()){
-			try{
+		if (pj.printDialog()) {
+			try {
 				pj.print();
-			}
-			catch(PrinterException e){
+			} catch (PrinterException e) {
 				System.out.println(e);
 			}
 		}
 	} // END OF print METHOD
-	
+
 	private void goToCheckInScreen() {
 		checkInTitle.setVisible(true);
 		checkInLabel.setVisible(true);
@@ -1109,8 +1286,8 @@ public class MainFrame extends JFrame implements ActionListener {
 
 		CheckInOption.setVisible(false);
 		CheckOutOption.setVisible(false);
-	}
-	
+	}// END OF goToCheckInScreen METHOD
+
 	private void goToCheckOutScreen() {
 		checkOutTitle.setVisible(true);
 		roomNumberLabel.setVisible(true);
@@ -1121,8 +1298,8 @@ public class MainFrame extends JFrame implements ActionListener {
 
 		CheckInOption.setVisible(false);
 		CheckOutOption.setVisible(false);
-	}
-	
+	}// END OF goToCheckOutScreen METHOD
+
 	private void guestInfo() {
 		checkInTitle.setVisible(true);
 		checkInLabel.setVisible(false);
@@ -1139,11 +1316,21 @@ public class MainFrame extends JFrame implements ActionListener {
 		checkInTextField.setVisible(false);
 		checkOutTextField.setVisible(false);
 		toMainScreenButton.setVisible(true);
-		
+
 		CheckAvailabilityButton.setVisible(false);
-		
+
 		guestInfoLabel.setVisible(true);
-		descriptionOfRoomLabel.setText("<html> Type of room: <font color='red'>"+ toR + "</font> <br> Characteristics: <font color='red'>"+ chaR + "</font> <br> Location of Room: <font color='red'>" + loR + "</font> <br> Number of People: <font color='red'>" + noP + "</font> </html>"); //html statement helps to use "end of line" and other html features with Jlabel.
+		descriptionOfRoomLabel
+				.setText("<html> Type of room: <font color='red'>" + toR
+						+ "</font> <br> Characteristics: <font color='red'>"
+						+ chaR
+						+ "</font> <br> Location of Room: <font color='red'>"
+						+ loR
+						+ "</font> <br> Number of People: <font color='red'>"
+						+ noP + "</font> </html>"); // html statement helps to
+													// use "end of line" and
+													// other html features with
+													// Jlabel.
 		descriptionOfRoomLabel.setVisible(true);
 		firstNameOfGuestLabel.setVisible(true);
 		firstNameOfGuestTextField.setVisible(true);
@@ -1164,8 +1351,8 @@ public class MainFrame extends JFrame implements ActionListener {
 		emailLabel.setVisible(true);
 		emailTextField.setVisible(true);
 		makeReservation.setVisible(true);
-	}
-	
+	}// END OF guestInfo METHOD
+
 	private void goToAdditionalChargesScreen() {
 		roomNumberLabel.setVisible(false);
 		roomNumberTextField.setVisible(false);
@@ -1179,8 +1366,8 @@ public class MainFrame extends JFrame implements ActionListener {
 		generateBill.setVisible(true);
 		checkOutSummaryLabel.setVisible(true);
 		checkOutTextField.setVisible(true);
-	}
-	
+	}// END OF goToAdditionalChargesScreen METHOD
+
 	private void goToMainScreen() {
 		checkInTitle.setVisible(false);
 		checkInLabel.setVisible(false);
@@ -1219,7 +1406,7 @@ public class MainFrame extends JFrame implements ActionListener {
 		restaurantCheckBox.setSelected(false);
 		restaurantTextField.setVisible(false);
 		generateBill.setVisible(false);
-		
+
 		guestInfoLabel.setVisible(false);
 		descriptionOfRoomLabel.setVisible(false);
 		firstNameOfGuestLabel.setVisible(false);
@@ -1241,7 +1428,7 @@ public class MainFrame extends JFrame implements ActionListener {
 		emailLabel.setVisible(false);
 		emailTextField.setVisible(false);
 		makeReservation.setVisible(false);
-		
+
 		checkOutSummaryLabel.setVisible(false);
 		BillLabel.setVisible(false);
 		BillSummaryLabel.setVisible(false);
@@ -1250,8 +1437,8 @@ public class MainFrame extends JFrame implements ActionListener {
 
 		CheckInOption.setVisible(true);
 		CheckOutOption.setVisible(true);
-	}
-	
+	}// END OF goToMainScreen METHOD
+
 	private void goToBillScreen() {
 		additionalChargesLabel.setVisible(false);
 		telephoneCheckBox.setVisible(false);
@@ -1265,11 +1452,45 @@ public class MainFrame extends JFrame implements ActionListener {
 		roomServiceTextField.setVisible(false);
 		equestrianAdventureTextField.setVisible(false);
 		restaurantTextField.setVisible(false);
-		
+
 		BillLabel.setVisible(true);
 		BillSummaryLabel.setVisible(true);
 		BillSummaryLabel2.setVisible(true);
 		printBillButton.setVisible(true);
-	}
-	
+	}// END OF goToBillScreen METHOD
+
+	private void recordSpecialCharge(String roomNumber,
+			String chargeDescription, String fee) {
+
+		try {
+			Class.forName("sun.jdbc.odbc.JdbcOdbcDriver");
+			Connection connection = DriverManager
+					.getConnection("jdbc:odbc:hotelreservation");
+			Statement statement = connection.createStatement();
+
+			String s = "INSERT INTO specialCharges(roomNumber, chargeDescription, fee) ";
+			s = s + "VALUES ('" + roomNumber + "', '" + chargeDescription
+					+ "', '" + fee + "')";
+
+			statement.addBatch(s);
+			statement.executeBatch();
+
+			statement.close();
+			connection.close();
+
+		} catch (SQLException sqlException) { // detect problems interacting
+												// with the database
+			JOptionPane.showMessageDialog(null, sqlException.getMessage(),
+					"Database Error", JOptionPane.ERROR_MESSAGE);
+			System.exit(1);
+		} catch (ClassNotFoundException classNotFound) { // detect problems
+															// loading database
+															// driver
+			JOptionPane.showMessageDialog(null, classNotFound.getMessage(),
+					"Driver Not Found", JOptionPane.ERROR_MESSAGE);
+			System.exit(1);
+		}
+
+	}// END OF recordSpecialCharges METHOD
+
 }
