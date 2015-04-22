@@ -1,12 +1,16 @@
 package hotelReservation;
 
 import java.awt.Font;
+import java.awt.Graphics;
+import java.awt.Graphics2D;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.ItemEvent;
 import java.awt.event.ItemListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.awt.print.PageFormat;
+import java.awt.print.Printable;
 import java.awt.print.PrinterException;
 import java.awt.print.PrinterJob;
 
@@ -18,9 +22,10 @@ import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
+
 import java.sql.*;
 
-public class MainFrame extends JFrame implements ActionListener {
+public class MainFrame extends JFrame implements ActionListener, Printable {
 
 	public static final int WIDTH = 450;
 	public static final int HEIGHT = 400;
@@ -73,6 +78,8 @@ public class MainFrame extends JFrame implements ActionListener {
 	final JTextField zipCodeTextField;
 	final JTextField phoneTextField;
 	final JTextField emailTextField;
+
+	final JFrame frame;
 
 	JButton CheckAvailabilityButton;
 	JButton CheckInOption;
@@ -408,7 +415,7 @@ public class MainFrame extends JFrame implements ActionListener {
 		JPanel p = new JPanel();
 		p.setLayout(null);
 
-		final JFrame frame = new JFrame();
+		/* final JFrame */frame = new JFrame();
 
 		p.add(checkInTitle);
 		p.add(checkInLabel);
@@ -558,7 +565,17 @@ public class MainFrame extends JFrame implements ActionListener {
 		}
 
 		if (event.getSource() == printBillButton) {
-			print();
+
+			PrinterJob job = PrinterJob.getPrinterJob();
+			job.setPrintable(this);
+			boolean ok = job.printDialog();
+			if (ok) {
+				try {
+					job.print();
+				} catch (PrinterException ex) {
+					/* The job did not successfully complete */
+				}
+			}
 		}
 
 		if (event.getSource() == CheckAvailabilityButton) {
@@ -567,12 +584,14 @@ public class MainFrame extends JFrame implements ActionListener {
 					&& specificRoom.getSelectedItem() != null
 					&& locationOfRoom.getSelectedItem() != null
 					&& numberOfPeople.getSelectedItem() != null
-					&& checkInTextField.getText().length() > 0) { // Checks if
+					&& checkInTextField.getText().length() > 0) { // Checks
+																	// if
 																	// the
 																	// fields
 																	// are
 																	// completed
-																	// by the
+																	// by
+																	// the
 																	// user.
 
 				toR = typeOfRoom.getSelectedItem().toString();
@@ -599,12 +618,14 @@ public class MainFrame extends JFrame implements ActionListener {
 					&& phoneTextField.getText().length() > 0
 					&& zipCodeTextField.getText().length() > 0
 					&& emailTextField.getText().length() > 0
-			/* && creditCardNumberTextField.getText() != null */) { // Checks if
+			/* && creditCardNumberTextField.getText() != null */) { // Checks
+																	// if
 																	// the
 																	// fields
 																	// are
 																	// completed
-																	// by the
+																	// by
+																	// the
 																	// user.
 
 				fName = firstNameOfGuestTextField.getText();
@@ -636,8 +657,10 @@ public class MainFrame extends JFrame implements ActionListener {
 		}
 
 		if (event.getSource() == generateBill) {
-			if (checkOutTextField.getText().length() > 0) { // If a check-out
-															// date is selected.
+			if (checkOutTextField.getText().length() > 0) { // If a
+															// check-out
+															// date is
+															// selected.
 				goToBillScreen();
 				incrementRoomCount(roomID);
 
@@ -666,11 +689,12 @@ public class MainFrame extends JFrame implements ActionListener {
 					// System.out.println(onePersonFee);
 					// System.out.println(noP);
 
-//					String s3 = "DELETE FROM guest WHERE guestID = " + guestID
-//							+ "";
-//
-//					statement.addBatch(s3);
-//					statement.executeBatch();
+					// String s3 = "DELETE FROM guest WHERE guestID = " +
+					// guestID
+					// + "";
+					//
+					// statement.addBatch(s3);
+					// statement.executeBatch();
 
 					statement.close();
 					connection.close();
@@ -716,29 +740,34 @@ public class MainFrame extends JFrame implements ActionListener {
 
 					Days lenghtOfStay = new Days();
 					int numberOFDays = lenghtOfStay.numberOfDays(checkIn,
-							checkOut); // Calculates the number of days between
+							checkOut); // Calculates the number of days
+										// between
 										// 2 dates.
 
 					if (telephoneCheckBox.isSelected()) {
 						telephoneFee = Float.parseFloat(telephoneTextField
 								.getText());
-						recordSpecialCharge(roomNumber, "Telephone Fee", Float.toString(telephoneFee));
+						recordSpecialCharge(roomNumber, "Telephone Fee",
+								Float.toString(telephoneFee));
 					}
 					if (restaurantCheckBox.isSelected()) {
 						restaurantFee = Float.parseFloat(restaurantTextField
 								.getText());
-						recordSpecialCharge(roomNumber, "Restaurant Fee", Float.toString(restaurantFee));
+						recordSpecialCharge(roomNumber, "Restaurant Fee",
+								Float.toString(restaurantFee));
 					}
 					if (equestrianAdventureCheckBox.isSelected()) {
 						equestrianAdventureFee = Float
 								.parseFloat(equestrianAdventureTextField
 										.getText());
-						recordSpecialCharge(roomNumber, "Equestrian Adventure", Float.toString(equestrianAdventureFee));
+						recordSpecialCharge(roomNumber, "Equestrian Adventure",
+								Float.toString(equestrianAdventureFee));
 					}
 					if (roomServiceCheckBox.isSelected()) {
 						roomServiceFee = Float.parseFloat(roomServiceTextField
 								.getText());
-						recordSpecialCharge(roomNumber, "Room Service", Float.toString(roomServiceFee));
+						recordSpecialCharge(roomNumber, "Room Service",
+								Float.toString(roomServiceFee));
 					}
 
 					float additionalChargesTotal = telephoneFee
@@ -757,9 +786,10 @@ public class MainFrame extends JFrame implements ActionListener {
 						priceOfRoomAUX = "2 persons = "
 								+ String.format("%.2f", twoPersonFee);
 					} else {
-						priceOfRoom = twoPersonFee + (noPAUX - 2) * extraPersonFee; // Total
-																				// per
-																				// night.
+						priceOfRoom = twoPersonFee + (noPAUX - 2)
+								* extraPersonFee; // Total
+						// per
+						// night.
 						priceOfRoomAUX = noP + " persons = "
 								+ String.format("%.2f", twoPersonFee) + " + "
 								+ Integer.toString(noPAUX - 2) + "*"
@@ -791,7 +821,8 @@ public class MainFrame extends JFrame implements ActionListener {
 									+ String.format("%.2f", taxRoom)
 									+ "</font>"
 									+ "<br> ADDITIONAL CHARGES: <font color='red'>"
-									+ String.format("%.2f", additionalChargesTotal)
+									+ String.format("%.2f",
+											additionalChargesTotal)
 									+ "<br> telephone: "
 									+ String.format("%.2f", telephoneFee)
 									+ "<br> room service: "
@@ -799,14 +830,16 @@ public class MainFrame extends JFrame implements ActionListener {
 									+ "<br> restaurant: "
 									+ String.format("%.2f", restaurantFee)
 									+ "<br> equestrian adventure: "
-									+ String.format("%.2f", equestrianAdventureFee)
+									+ String.format("%.2f",
+											equestrianAdventureFee)
 									+ "</font>"
 									+ "<br><br><br> TOTAL: <font color='red'>"
 									+ String.format("%.2f", TOTAL)
 									+ " $</font> </html>");
 
 				} catch (SQLException sqlException) { // detect problems
-														// interacting with the
+														// interacting with
+														// the
 														// database
 					JOptionPane.showMessageDialog(null,
 							sqlException.getMessage(), "Database Error",
@@ -1235,7 +1268,7 @@ public class MainFrame extends JFrame implements ActionListener {
 			ResultSet resultSet = statement.executeQuery(s1);
 			resultSet.next();
 			int available = resultSet.getInt(5);
-			
+
 			available++;
 
 			String s2 = "UPDATE rooms SET numAvailable = '" + available
@@ -1255,16 +1288,34 @@ public class MainFrame extends JFrame implements ActionListener {
 
 	} // END OF incrementRoomCount METHOD
 
-	private void print() { // PRINT METHOD
-		PrinterJob pj = PrinterJob.getPrinterJob();
-		if (pj.printDialog()) {
-			try {
-				pj.print();
-			} catch (PrinterException e) {
-				System.out.println(e);
-			}
+	// @Override
+	public int print(Graphics g, PageFormat pf, int page) // PRINT METHOD
+			throws PrinterException {
+		if (page > 0) {
+			return NO_SUCH_PAGE;
 		}
-	} // END OF print METHOD
+
+		Graphics2D g2d = (Graphics2D) g;
+		g2d.translate(pf.getImageableX(), pf.getImageableY());
+
+		// Print the entire visible contents of a
+		// java.awt.Frame.
+		frame.printAll(g);
+
+		return PAGE_EXISTS;
+	}
+
+	// {
+
+	// PrinterJob pj = PrinterJob.getPrinterJob();
+	// if (pj.printDialog()) {
+	// try {
+	// pj.print();
+	// } catch (PrinterException e) {
+	// System.out.println(e);
+	// }
+	// }
+	// } END OF print METHOD
 
 	private void goToCheckInScreen() {
 		checkInTitle.setVisible(true);
