@@ -689,12 +689,12 @@ public class MainFrame extends JFrame implements ActionListener, Printable {
 					// System.out.println(onePersonFee);
 					// System.out.println(noP);
 
-					// String s3 = "DELETE FROM guest WHERE guestID = " +
-					// guestID
-					// + "";
-					//
-					// statement.addBatch(s3);
-					// statement.executeBatch();
+					 String s3 = "DELETE FROM guest WHERE guestID = " +
+					 guestID
+					 + "";
+					
+					 statement.addBatch(s3);
+					 statement.executeBatch();
 
 					statement.close();
 					connection.close();
@@ -747,27 +747,27 @@ public class MainFrame extends JFrame implements ActionListener, Printable {
 					if (telephoneCheckBox.isSelected()) {
 						telephoneFee = Float.parseFloat(telephoneTextField
 								.getText());
-						recordSpecialCharge(roomNumber, "Telephone Fee",
-								Float.toString(telephoneFee));
+//						recordSpecialCharge(roomNumber, "Telephone Fee",
+//								Float.toString(telephoneFee));
 					}
 					if (restaurantCheckBox.isSelected()) {
 						restaurantFee = Float.parseFloat(restaurantTextField
 								.getText());
-						recordSpecialCharge(roomNumber, "Restaurant Fee",
-								Float.toString(restaurantFee));
+//						recordSpecialCharge(roomNumber, "Restaurant Fee",
+//								Float.toString(restaurantFee));
 					}
 					if (equestrianAdventureCheckBox.isSelected()) {
 						equestrianAdventureFee = Float
 								.parseFloat(equestrianAdventureTextField
 										.getText());
-						recordSpecialCharge(roomNumber, "Equestrian Adventure",
-								Float.toString(equestrianAdventureFee));
+//						recordSpecialCharge(roomNumber, "Equestrian Adventure",
+//								Float.toString(equestrianAdventureFee));
 					}
 					if (roomServiceCheckBox.isSelected()) {
 						roomServiceFee = Float.parseFloat(roomServiceTextField
 								.getText());
-						recordSpecialCharge(roomNumber, "Room Service",
-								Float.toString(roomServiceFee));
+//						recordSpecialCharge(roomNumber, "Room Service",
+//								Float.toString(roomServiceFee));
 					}
 
 					float additionalChargesTotal = telephoneFee
