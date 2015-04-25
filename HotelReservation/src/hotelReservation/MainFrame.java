@@ -803,7 +803,7 @@ public class MainFrame extends JFrame implements ActionListener, Printable {
 
 					BillSummaryLabel2
 							.setText("<html> Price per night: <font color='red'> "
-									+ String.format("%.2f", priceOfRoom)
+									+ String.format(" $ %.2f", priceOfRoom)
 									+ "<br>"
 									+ priceOfRoomAUX
 									+ "</font> "
@@ -811,31 +811,31 @@ public class MainFrame extends JFrame implements ActionListener, Printable {
 									+ Integer.toString(numberOFDays)
 									+ "</font>"
 									+ "<br><br> ROOM SUB-TOTAL: <font color='red'>"
-									+ String.format("%.2f", subTotalRoom)
+									+ String.format(" $ %.2f", subTotalRoom)
 									+ "<br>"
-									+ String.format("%.2f", priceOfRoom)
+									+ String.format(" $ %.2f", priceOfRoom)
 									+ " * "
 									+ Integer.toString(numberOFDays)
 									+ "</font>"
 									+ "<br> ROOM TAX: <font color='red'>"
-									+ String.format("%.2f", taxRoom)
+									+ String.format(" $ %.2f", taxRoom)
 									+ "</font>"
 									+ "<br> ADDITIONAL CHARGES: <font color='red'>"
-									+ String.format("%.2f",
+									+ String.format(" $ %.2f",
 											additionalChargesTotal)
 									+ "<br> telephone: "
-									+ String.format("%.2f", telephoneFee)
+									+ String.format(" $ %.2f", telephoneFee)
 									+ "<br> room service: "
-									+ String.format("%.2f", roomServiceFee)
+									+ String.format("$%.2f", roomServiceFee)
 									+ "<br> restaurant: "
-									+ String.format("%.2f", restaurantFee)
+									+ String.format(" $ %.2f", restaurantFee)
 									+ "<br> equestrian adventure: "
-									+ String.format("%.2f",
+									+ String.format(" $ %.2f",
 											equestrianAdventureFee)
 									+ "</font>"
 									+ "<br><br><br> TOTAL: <font color='red'>"
-									+ String.format("%.2f", TOTAL)
-									+ " $</font> </html>");
+									+ String.format(" $ %.2f", TOTAL)
+									+ " </font> </html>");
 
 				} catch (SQLException sqlException) { // detect problems
 														// interacting with
