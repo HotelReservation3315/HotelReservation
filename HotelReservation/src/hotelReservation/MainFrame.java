@@ -13,7 +13,6 @@ import java.awt.print.PageFormat;
 import java.awt.print.Printable;
 import java.awt.print.PrinterException;
 import java.awt.print.PrinterJob;
-
 import javax.swing.JButton;
 import javax.swing.JCheckBox;
 import javax.swing.JComboBox;
@@ -28,7 +27,7 @@ import java.sql.*;
 public class MainFrame extends JFrame implements ActionListener, Printable {
 
 	public static final int WIDTH = 450;
-	public static final int HEIGHT = 400;
+	public static final int HEIGHT = 413;
 	public static final int XCOORD = 100;
 	public static final int YCOORD = 80;
 
@@ -52,6 +51,7 @@ public class MainFrame extends JFrame implements ActionListener, Printable {
 	JLabel zipCodeLabel;
 	JLabel phoneLabel;
 	JLabel emailLabel;
+	JLabel ccNumberLabel;
 	JLabel checkOutSummaryLabel;
 	JLabel BillLabel;
 	JLabel BillSummaryLabel;
@@ -78,6 +78,7 @@ public class MainFrame extends JFrame implements ActionListener, Printable {
 	final JTextField zipCodeTextField;
 	final JTextField phoneTextField;
 	final JTextField emailTextField;
+	final JTextField ccNumberTextField;
 
 	final JFrame frame;
 
@@ -108,7 +109,7 @@ public class MainFrame extends JFrame implements ActionListener, Printable {
 	String zip;
 	String phone;
 	String email;
-	String ccNum;
+	String ccNum; // Credit Card Number.
 	String checkIn; // Date
 	String checkOut; // Date
 	String roomNumber; // Identifies each room with: roomID + numAvailable.
@@ -196,7 +197,6 @@ public class MainFrame extends JFrame implements ActionListener, Printable {
 
 		locationOfRoom.addItem("Patio");
 		locationOfRoom.addItem("Forest");
-		// locationOfRoom.addItem("Any");
 		locationOfRoom.setSelectedItem(null); // Doesn't select any option by
 												// default in the ComboBox.
 
@@ -224,16 +224,16 @@ public class MainFrame extends JFrame implements ActionListener, Printable {
 		CheckAvailabilityButton.addActionListener(this);
 
 		toMainScreenButton = new JButton("To Main Screen");
-		toMainScreenButton.setBounds(300, 320, 125, 25);
+		toMainScreenButton.setBounds(300, 330, 125, 25);
 		toMainScreenButton.setVisible(false);
 		toMainScreenButton.addActionListener(this);
 
 		CheckInOption = new JButton("Check-In");
-		CheckInOption.setBounds(140, 110, 150, 25);
+		CheckInOption.setBounds(140, 120, 150, 35);
 		CheckInOption.addActionListener(this);
 
 		CheckOutOption = new JButton("Check-Out");
-		CheckOutOption.setBounds(140, 160, 150, 25);
+		CheckOutOption.setBounds(140, 170, 150, 35);
 		CheckOutOption.addActionListener(this);
 
 		checkOutTitle = new JLabel("CHECK-OUT:");
@@ -381,6 +381,14 @@ public class MainFrame extends JFrame implements ActionListener, Printable {
 		emailTextField.setBounds(80, 310, 110, 20);
 		emailTextField.setVisible(false);
 
+		ccNumberLabel = new JLabel("Credit Card: ");
+		ccNumberTextField = new JTextField(10);
+		
+		ccNumberLabel.setBounds(10, 295, 100, 100);
+		ccNumberLabel.setVisible(false);
+		ccNumberTextField.setBounds(80, 335, 110, 20);
+		ccNumberTextField.setVisible(false);
+		
 		makeReservation = new JButton("Make Reservation");
 		makeReservation.setBounds(235, 65, 160, 35);
 		makeReservation.setVisible(false);
@@ -415,7 +423,7 @@ public class MainFrame extends JFrame implements ActionListener, Printable {
 		JPanel p = new JPanel();
 		p.setLayout(null);
 
-		/* final JFrame */frame = new JFrame();
+		frame = new JFrame();
 
 		p.add(checkInTitle);
 		p.add(checkInLabel);
@@ -473,7 +481,10 @@ public class MainFrame extends JFrame implements ActionListener, Printable {
 		p.add(BillSummaryLabel);
 		p.add(BillSummaryLabel2);
 		p.add(printBillButton);
+		p.add(ccNumberLabel);
+		p.add(ccNumberTextField);
 
+		frame.setTitle("Hotel Reservation System");
 		frame.add(p);
 		frame.setSize(WIDTH, HEIGHT);
 		frame.setLocation(XCOORD, YCOORD);
@@ -618,6 +629,7 @@ public class MainFrame extends JFrame implements ActionListener, Printable {
 					&& phoneTextField.getText().length() > 0
 					&& zipCodeTextField.getText().length() > 0
 					&& emailTextField.getText().length() > 0
+					&& ccNumberTextField.getText().length() > 0
 			/* && creditCardNumberTextField.getText() != null */) { // Checks
 																	// if
 																	// the
@@ -637,12 +649,12 @@ public class MainFrame extends JFrame implements ActionListener, Printable {
 				zip = zipCodeTextField.getText();
 				phone = phoneTextField.getText();
 				email = emailTextField.getText();
-				// ccNum = creditCardNumberTextField.getText();
+				ccNum = ccNumberTextField.getText();
 
 				guestID = guestIn(fName, lName, add1, add2, city, state, zip,
-						phone, email/* , ccNum */);
+						phone, email , ccNum);
 				roomNumber = visitIn(roomID, guestID, Integer.parseInt(noP),
-						checkIn/* , checkOut */);
+						checkIn);
 				String message = "Your room number is " + roomNumber;
 				message = message
 						+ ". Please remember this number for checkout.";
@@ -747,27 +759,19 @@ public class MainFrame extends JFrame implements ActionListener, Printable {
 					if (telephoneCheckBox.isSelected()) {
 						telephoneFee = Float.parseFloat(telephoneTextField
 								.getText());
-//						recordSpecialCharge(roomNumber, "Telephone Fee",
-//								Float.toString(telephoneFee));
 					}
 					if (restaurantCheckBox.isSelected()) {
 						restaurantFee = Float.parseFloat(restaurantTextField
 								.getText());
-//						recordSpecialCharge(roomNumber, "Restaurant Fee",
-//								Float.toString(restaurantFee));
 					}
 					if (equestrianAdventureCheckBox.isSelected()) {
 						equestrianAdventureFee = Float
 								.parseFloat(equestrianAdventureTextField
 										.getText());
-//						recordSpecialCharge(roomNumber, "Equestrian Adventure",
-//								Float.toString(equestrianAdventureFee));
 					}
 					if (roomServiceCheckBox.isSelected()) {
 						roomServiceFee = Float.parseFloat(roomServiceTextField
 								.getText());
-//						recordSpecialCharge(roomNumber, "Room Service",
-//								Float.toString(roomServiceFee));
 					}
 
 					float additionalChargesTotal = telephoneFee
@@ -975,10 +979,8 @@ public class MainFrame extends JFrame implements ActionListener, Printable {
 
 	} // END OF search METHOD
 
-	/*
-	 * Returns true if there is at least one room available meeting the
-	 * specifications type t, location l, and characteristics ch.
-	 */
+	/* Returns true if there is at least one room available meeting the
+	  specifications type t, location l, and characteristics ch.*/
 	private boolean isAvailable(String t, String l, String ch) {
 		boolean available = false;
 
@@ -1018,11 +1020,9 @@ public class MainFrame extends JFrame implements ActionListener, Printable {
 		return available;
 	} // END OF isAvailable METHOD
 
-	/*
-	 * Returns the roomID if there is at least one room available meeting the
-	 * specifications type toR, location loR, and characteristics chaR. Returns
-	 * -1 as the roomID if the user chooses not to continue to booking.
-	 */
+	/* Returns the roomID if there is at least one room available meeting the
+	  specifications type toR, location loR, and characteristics chaR. Returns
+	 -1 as the roomID if the user chooses not to continue to booking. */
 	private int checkAvailability(String toR, String loR, String chaR) {
 
 		int result, roomID = -1;
@@ -1036,7 +1036,6 @@ public class MainFrame extends JFrame implements ActionListener, Printable {
 			if (result == JOptionPane.YES_OPTION) {
 
 				checkIn = checkInTextField.getText();
-				// checkOut = checkOutTextField.getText();
 
 				try {
 
@@ -1083,16 +1082,11 @@ public class MainFrame extends JFrame implements ActionListener, Printable {
 	} // END OF checkAvailability METHOD
 		// END OF booking room and retrieving roomID to identify type/loc/char
 
-	/*
-	 * Inserts guest information into guest table. Returns the guestID generated
-	 * for use in inserting into visit table.
-	 */
+	/* Inserts guest information into guest table. Returns the guestID generated
+	  for use in inserting into visit table. */
 	private int guestIn(String fName, String lName, String add1, String add2,
-			String city, String state, String zip, String phone, String email/*
-																			 * ,
-																			 * String
-																			 * ccNum
-																			 */) {
+			String city, String state, String zip, String phone, String email,
+			String ccNum) {
 
 		int guestNum = 0;
 
@@ -1106,7 +1100,7 @@ public class MainFrame extends JFrame implements ActionListener, Printable {
 			s1 = s1 + "VALUES ('" + fName + "', '" + lName + "', '" + add1
 					+ "', '" + add2 + "', '" + city;
 			s1 = s1 + "', '" + state + "', '" + zip + "', '" + phone + "', '"
-					+ email + "', '1234567891234567')";// dummy cc value
+					+ email + "', '" + ccNum + "')";
 
 			statement.addBatch(s1);
 			statement.executeBatch();
@@ -1127,10 +1121,8 @@ public class MainFrame extends JFrame implements ActionListener, Printable {
 		return guestNum;
 	} // END OF method to insert guest information
 
-	/*
-	 * Inserts visit information into visit table. Returns the roomNumber for
-	 * the check in confirmation.
-	 */
+	/* Inserts visit information into visit table. Returns the roomNumber for
+	  the check in confirmation. */
 	private String visitIn(int roomID, int guestID, int numOfPeople,
 			String inDate) {
 
@@ -1218,8 +1210,8 @@ public class MainFrame extends JFrame implements ActionListener, Printable {
 		return roomNum;
 	} // END OF method to insert visit
 
-	// Decrements the number available for the room category
-	// indicated by parameter roomID.
+	/* Decrements the number available for the room category
+	 indicated by parameter roomID.*/
 	private void decrementRoomCount(int roomID) {
 
 		try {
@@ -1253,8 +1245,8 @@ public class MainFrame extends JFrame implements ActionListener, Printable {
 
 	} // END OF decrementRoomCount METHOD
 
-	// Increments the number available for the room category
-	// indicated by parameter roomID.
+	/* Increments the number available for the room category
+	 indicated by parameter roomID.*/
 	private void incrementRoomCount(int roomID) {
 
 		try {
@@ -1304,18 +1296,6 @@ public class MainFrame extends JFrame implements ActionListener, Printable {
 
 		return PAGE_EXISTS;
 	}
-
-	// {
-
-	// PrinterJob pj = PrinterJob.getPrinterJob();
-	// if (pj.printDialog()) {
-	// try {
-	// pj.print();
-	// } catch (PrinterException e) {
-	// System.out.println(e);
-	// }
-	// }
-	// } END OF print METHOD
 
 	private void goToCheckInScreen() {
 		checkInTitle.setVisible(true);
@@ -1401,6 +1381,8 @@ public class MainFrame extends JFrame implements ActionListener, Printable {
 		zipCodeTextField.setVisible(true);
 		emailLabel.setVisible(true);
 		emailTextField.setVisible(true);
+		ccNumberLabel.setVisible(true);
+		ccNumberTextField.setVisible(true);
 		makeReservation.setVisible(true);
 	}// END OF guestInfo METHOD
 
@@ -1478,6 +1460,8 @@ public class MainFrame extends JFrame implements ActionListener, Printable {
 		zipCodeTextField.setVisible(false);
 		emailLabel.setVisible(false);
 		emailTextField.setVisible(false);
+		ccNumberLabel.setVisible(false);
+		ccNumberTextField.setVisible(false);
 		makeReservation.setVisible(false);
 
 		checkOutSummaryLabel.setVisible(false);
@@ -1509,39 +1493,5 @@ public class MainFrame extends JFrame implements ActionListener, Printable {
 		BillSummaryLabel2.setVisible(true);
 		printBillButton.setVisible(true);
 	}// END OF goToBillScreen METHOD
-
-	private void recordSpecialCharge(String roomNumber,
-			String chargeDescription, String fee) {
-
-		try {
-			Class.forName("sun.jdbc.odbc.JdbcOdbcDriver");
-			Connection connection = DriverManager
-					.getConnection("jdbc:odbc:hotelreservation");
-			Statement statement = connection.createStatement();
-
-			String s = "INSERT INTO specialCharges(roomNumber, chargeDescription, fee) ";
-			s = s + "VALUES ('" + roomNumber + "', '" + chargeDescription
-					+ "', '" + fee + "')";
-
-			statement.addBatch(s);
-			statement.executeBatch();
-
-			statement.close();
-			connection.close();
-
-		} catch (SQLException sqlException) { // detect problems interacting
-												// with the database
-			JOptionPane.showMessageDialog(null, sqlException.getMessage(),
-					"Database Error", JOptionPane.ERROR_MESSAGE);
-			System.exit(1);
-		} catch (ClassNotFoundException classNotFound) { // detect problems
-															// loading database
-															// driver
-			JOptionPane.showMessageDialog(null, classNotFound.getMessage(),
-					"Driver Not Found", JOptionPane.ERROR_MESSAGE);
-			System.exit(1);
-		}
-
-	}// END OF recordSpecialCharges METHOD
 
 }

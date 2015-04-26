@@ -4,7 +4,7 @@ import java.awt.*;
 import java.awt.event.*; 
 import javax.swing.*; 
 
-/*From http://www.javatpoint.com/q/2935/code-in-java-swings-of-displaying-calendar*/
+/*Adapted to this project from: http://www.javatpoint.com/q/2935/code-in-java-swings-of-displaying-calendar*/
 
 class DatePicker { 
 	

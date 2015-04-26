@@ -1,7 +1,7 @@
 package hotelReservation;
 import java.util.Date;
 
-/*From: http://beginnersbook.com/2013/04/number-of-days-calculation-between-two-dates/*/
+/*Adapted to this project from: http://beginnersbook.com/2013/04/number-of-days-calculation-between-two-dates/*/
 
 class Days{
 	
